@@ -17,6 +17,6 @@ For my project, I am going to implement the algorithm proposed by Sheikh Abujar,
 Languages or Tools to be used: Java
 
 Supervisor:
-Dr. Ahmedul Kabir
-Assistant Professor
+Dr. Ahmedul Kabir,
+Assistant Professor,
 IIT, University of Dhaka
