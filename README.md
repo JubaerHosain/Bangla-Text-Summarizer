@@ -19,4 +19,4 @@ Languages or Tools to be used: Java
 Supervisor:
 Dr. Ahmedul Kabir,
 Assistant Professor,
-IIT, University of Dhaka
+IIT, University of Dhaka.
