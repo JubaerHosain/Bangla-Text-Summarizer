@@ -1,6 +1,5 @@
 package my.library;
 
-import javax.swing.*;
 
 public class MyPair<T1, T2> {
     private T1 first;

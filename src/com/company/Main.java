@@ -7,20 +7,10 @@ public class Main {
 
     private void start() {
         MyLibrary myLibrary = new MyLibrary();
-        myLibrary.splitString("aab", "aaaisaaaisaais");
+        myLibrary.splitString(" ", "My Name is Md Jubaer Hosain.");
     }
 
-    private void operation(int a[]) {
-        a = new int[1];
-        a[0] = 10;
-    }
-
-    public static void main(String[] args) {
-        // write your code here
-        System.out.println("Hello World");
-        Main main = new Main();
-//        main.start();
-
+    private void check() {
         MyList<Integer> list = new MyList<>();
         list.add(45);
         list.add(34);
@@ -47,7 +37,21 @@ public class Main {
 
         int[] a = new int[1];
         a[0] = 99;
-        main.operation(a);
+        operation(a);
         System.out.println(a[0]);
+    }
+
+    private void operation(int a[]) {
+        a = new int[1];
+        a[0] = 10;
+    }
+
+    public static void main(String[] args) {
+        // write your code here
+        System.out.println("Hello World");
+        Main main = new Main();
+        main.start();
+
+
     }
 }

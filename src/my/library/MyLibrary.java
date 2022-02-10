@@ -11,7 +11,6 @@ public class MyLibrary {
     }
 
 
-
     /**
      * This method converts a String to array of character.
      */
@@ -22,7 +21,6 @@ public class MyLibrary {
             charArray[i] = string.charAt(i);
         return charArray;
     }
-
 
 
     /**
@@ -58,6 +56,24 @@ public class MyLibrary {
         return finalLPSArray;
     }
 
+    /**
+     * This method will find the ranges(pattern range) which will be removed from the string
+     */
+    private MyList<MyPair<Integer, Integer>> findRemovableRanges(int[] lpsArray, int patternLength) {
+        MyList<MyPair<Integer, Integer>> removableRanges = new MyList<>();
+
+        int start = 0;
+        for(int i = 0; i < lpsArray.length; i++) {
+            if(lpsArray[i] != patternLength) {
+                continue;
+            } else if(i-patternLength+1 >= start) {
+                removableRanges.add(new MyPair<>(i-patternLength+1,i));
+                start = i + 1;
+            }
+        }
+
+        return removableRanges;
+    }
 
 
     /**
@@ -66,11 +82,17 @@ public class MyLibrary {
      */
     public void splitString(String pattern, String string) {
         char[] charArray = toCharArray(pattern + "也" + string);
-
         int[] lpsArray = computeLPS(charArray, pattern.length());
+
         print_Array(lpsArray);
 
+        // find ranges that would be removed from the string
+        MyList<MyPair<Integer, Integer>> removableRanges = findRemovableRanges(lpsArray, pattern.length());
 
+        for(int i = 0; i < removableRanges.size(); i++) {
+            MyPair<Integer, Integer> pair = removableRanges.get(i);
+            System.out.println(pair.getFirst() + " " + pair.getSecond());
+        }
     }
 }
 
