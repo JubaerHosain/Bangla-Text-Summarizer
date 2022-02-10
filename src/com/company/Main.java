@@ -7,7 +7,7 @@ public class Main {
 
     private void start() {
         MyLibrary myLibrary = new MyLibrary();
-        myLibrary.splitString(" ", "My Name is Md Jubaer Hosain.");
+        myLibrary.splitString(".", "My Name is Md Jubaer Hosain. I am a Student of University of Dhaka.");
     }
 
     private void check() {
@@ -48,7 +48,6 @@ public class Main {
 
     public static void main(String[] args) {
         // write your code here
-        System.out.println("Hello World");
         Main main = new Main();
         main.start();
 

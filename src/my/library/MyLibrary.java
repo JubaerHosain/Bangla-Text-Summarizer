@@ -75,6 +75,45 @@ public class MyLibrary {
         return removableRanges;
     }
 
+    private MyList<String> extractTokens(MyList<MyPair<Integer, Integer>> ranges, String string) {
+        MyList<String> tokens = new MyList<>();
+
+        // First interval (0 to firstValue of first range)
+        // Append in string takes n^2, that's why I used StringBuffer
+        StringBuffer temp = new StringBuffer();
+        for(int i = 0; i <= ranges.get(0).getFirst()-1; i++) {
+            temp.append(string.charAt(i));
+        }
+
+        if(temp.length() != 0) {
+            tokens.add(temp.toString());
+        }
+
+        // Intermediary intervals
+        for(int i = 0; i < ranges.size()-1; i++) {
+            temp = new StringBuffer();
+            int left = ranges.get(i).getSecond()+1;
+            int right = ranges.get(i+1).getFirst()-1;
+            for(int j = left; j <= right; j++)
+                temp.append(string.charAt(j));
+            if(temp.length() != 0) {
+                tokens.add(temp.toString());
+            }
+        }
+
+        // Last interval
+        temp = new StringBuffer();
+        for(int i = ranges.get(ranges.size()-1).getSecond()+1; i < string.length(); i++) {
+            temp.append(string.charAt(i));
+        }
+
+        if(temp.length() != 0) {
+            tokens.add(temp.toString());
+        }
+
+        return tokens;
+    }
+
 
     /**
      * This method splits a string by given pattern using
@@ -84,15 +123,12 @@ public class MyLibrary {
         char[] charArray = toCharArray(pattern + "也" + string);
         int[] lpsArray = computeLPS(charArray, pattern.length());
 
-        print_Array(lpsArray);
-
         // find ranges that would be removed from the string
         MyList<MyPair<Integer, Integer>> removableRanges = findRemovableRanges(lpsArray, pattern.length());
 
-        for(int i = 0; i < removableRanges.size(); i++) {
-            MyPair<Integer, Integer> pair = removableRanges.get(i);
-            System.out.println(pair.getFirst() + " " + pair.getSecond());
-        }
+        MyList<String> tokens = extractTokens(removableRanges, string);
+        for(int i = 0; i < tokens.size(); i++)
+            System.out.println(tokens.get(i));
     }
 }
 
