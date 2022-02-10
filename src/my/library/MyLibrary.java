@@ -70,6 +70,7 @@ public class MyLibrary {
         int[] lpsArray = computeLPS(charArray, pattern.length());
         print_Array(lpsArray);
 
+
     }
 }
 

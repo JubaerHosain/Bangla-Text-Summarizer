@@ -1,6 +1,5 @@
 package my.library;
 
-import java.util.Arrays;
 
 /**
  * This is my custom List class that would be used in this project
@@ -19,7 +18,7 @@ public class MyList<Type> {
     }
 
     public Type[] copyOf(Type[] array, int newLength) {
-        Type[] newArray = (Type[]) new Object[2*newLength];
+        Type[] newArray = (Type[]) new Object[newLength];
         for(int i = 0; i < array.length; i++) {
             newArray[i] = array[i];
         }

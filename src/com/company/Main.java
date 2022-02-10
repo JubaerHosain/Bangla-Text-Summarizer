@@ -10,6 +10,11 @@ public class Main {
         myLibrary.splitString("aab", "aaaisaaaisaais");
     }
 
+    private void operation(int a[]) {
+        a = new int[1];
+        a[0] = 10;
+    }
+
     public static void main(String[] args) {
         // write your code here
         System.out.println("Hello World");
@@ -39,5 +44,10 @@ public class Main {
         for(int i = 0; i < list.size(); i++)
             System.out.print(list.get(i) + " ");
         System.out.println();
+
+        int[] a = new int[1];
+        a[0] = 99;
+        main.operation(a);
+        System.out.println(a[0]);
     }
 }
