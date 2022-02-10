@@ -1,5 +1,6 @@
 package com.company;
 
+import my.library.MyList;
 import my.library.MyLibrary;
 
 public class Main {
@@ -13,6 +14,30 @@ public class Main {
         // write your code here
         System.out.println("Hello World");
         Main main = new Main();
-        main.start();
+//        main.start();
+
+        MyList<Integer> list = new MyList<>();
+        list.add(45);
+        list.add(34);
+        list.add(35);
+        list.add(34545);
+        for(int i = 0; i < list.size(); i++)
+            System.out.print(list.get(i) + " ");
+        System.out.println();
+
+        list.remove(0);
+        for(int i = 0; i < list.size(); i++)
+            System.out.print(list.get(i) + " ");
+        System.out.println();
+
+        list.remove(0);
+        for(int i = 0; i < list.size(); i++)
+            System.out.print(list.get(i) + " ");
+        System.out.println();
+
+        list.add(242424);
+        for(int i = 0; i < list.size(); i++)
+            System.out.print(list.get(i) + " ");
+        System.out.println();
     }
 }

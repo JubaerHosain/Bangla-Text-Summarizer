@@ -2,6 +2,9 @@ package my.library;
 
 import java.util.Arrays;
 
+/**
+ * This is my custom List class that would be used in this project
+ */
 public class MyList<Type> {
     private int size = 0;
     private Type[] array;
@@ -11,18 +14,21 @@ public class MyList<Type> {
         array = (Type[]) new Object[500];
     }
 
-    private void increaseArrayLength() {
-        // Increase array size by twice
-        array = Arrays.copyOf(array, 2*array.length);
+    public int size() {
+        return this.size;
     }
 
-    public Type get(int index) {
-        if(index < size) {
-            return array[index];
+    public Type[] copyOf(Type[] array, int newLength) {
+        Type[] newArray = (Type[]) new Object[2*newLength];
+        for(int i = 0; i < array.length; i++) {
+            newArray[i] = array[i];
         }
-        else {
-            throw new ArrayIndexOutOfBoundsException();
-        }
+        return newArray;
+    }
+
+    private void increaseArrayLength() {
+        // Increase array size by twice
+        array = copyOf(array, 2*array.length);
     }
 
     public void add(Type element) {
@@ -30,5 +36,27 @@ public class MyList<Type> {
             increaseArrayLength();
         }
         array[size++] = element;
+    }
+
+    public Type get(int index) {
+        if(index < size) {
+            return array[index];
+        } else {
+            throw new ArrayIndexOutOfBoundsException();
+        }
+    }
+
+    public void remove(int index) {
+        if(index < size) {
+            array[index] = null;
+            while(index < size) {
+                array[index] = array[index+1];
+                index = index + 1;
+            }
+            size--;
+            array[index] = null;
+        } else {
+            throw new ArrayIndexOutOfBoundsException();
+        }
     }
 }
