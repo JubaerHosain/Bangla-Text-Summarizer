@@ -16,6 +16,8 @@ For my project, I am going to implement the algorithm proposed by Sheikh Abujar,
 
 Languages or Tools to be used: Java
 
+[i.e. Library or API use is discouraged unless it is absolutely required for the proper implementation of the project, subjected to the approval of the supervisor.]
+
 Supervisor:
 Dr. Ahmedul Kabir,
 Assistant Professor,
