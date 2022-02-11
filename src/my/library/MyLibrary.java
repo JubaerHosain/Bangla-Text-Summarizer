@@ -1,6 +1,12 @@
 package my.library;
 
 public class MyLibrary {
+
+    public MyLibrary() {
+
+    }
+
+
     /**
      * This method prints an integer array
      */
@@ -56,8 +62,9 @@ public class MyLibrary {
         return finalLPSArray;
     }
 
+
     /**
-     * This method will find the ranges(pattern range) which will be removed from the string
+     * This method finds the ranges(pattern range) which will be removed from the string
      */
     private MyList<MyPair<Integer, Integer>> findRemovableRanges(int[] lpsArray, int patternLength) {
         MyList<MyPair<Integer, Integer>> removableRanges = new MyList<>();
@@ -75,6 +82,9 @@ public class MyLibrary {
         return removableRanges;
     }
 
+    /**
+     * This method extracts the tokens removing patterns
+     */
     private MyList<String> extractTokens(MyList<MyPair<Integer, Integer>> ranges, String string) {
         MyList<String> tokens = new MyList<>();
 
@@ -131,31 +141,3 @@ public class MyLibrary {
             System.out.println(tokens.get(i));
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

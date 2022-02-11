@@ -9,8 +9,11 @@ public class MyList<Type> {
     private Type[] array;
 
     public MyList() {
-        // Initial given size is 500
-        array = (Type[]) new Object[500];
+        array = (Type[]) new Object[1000];
+    }
+
+    public MyList(int maxSize) {
+        array = (Type[]) new Object[maxSize];
     }
 
     public int size() {
