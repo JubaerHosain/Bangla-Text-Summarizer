@@ -1,7 +1,7 @@
 package com.company;
 
 import my.library.MyList;
-import my.library.MyLibrary;
+import bangla.tokenizer.MyLibrary;
 
 public class Main {
 

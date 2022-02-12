@@ -1,5 +1,6 @@
 package bangla.stemmer;
 
+import java.net.URL;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
@@ -28,6 +29,10 @@ public class Stemmer {
     }
 
     private void readOtherSuffixes() {
+        URL path = Stemmer.class.getResource("myFile.txt");
+        System.out.println(path);
+//        File f = new File(path.getFile());
+//        reader = new BufferedReader(new FileReader(f));
     }
 
     private void readReplaceSuffixes() {
