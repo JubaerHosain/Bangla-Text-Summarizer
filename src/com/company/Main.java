@@ -49,8 +49,27 @@ public class Main {
     public static void main(String[] args) {
         // write your code here
         Main main = new Main();
-        main.start();
+//        main.start();
 
+//        int ch = 0980;
+//        char ch = 'ঀ';
+//        System.out.println(ch);
+//        System.out.println((int)ch);
+//        char c1 = (char)2432;
+//        System.out.println(c1);
+//        int hex = 0x9FF;
+//        System.out.println(hex);
 
+        String str1 = "গেল";
+        String str = ".েল";
+
+        String a[] = str1.split(str);
+//      System.out.println(a[0]);
+        System.out.println(str1.contains(str));
+
+        String input = "পুঞ্জ";
+        for(int i = 0; i < input.length(); i++) {
+            System.out.println(input.charAt(i));
+        }
     }
 }
