@@ -1,7 +1,7 @@
 package bangla.tokenizer;
 
-import my.library.MyList;
-import my.library.MyPair;
+import my.library.List;
+import my.library.Pair;
 
 public class MyLibrary {
 
@@ -69,15 +69,15 @@ public class MyLibrary {
     /**
      * This method finds the ranges(pattern range) which will be removed from the string
      */
-    private MyList<MyPair<Integer, Integer>> findRemovableRanges(int[] lpsArray, int patternLength) {
-        MyList<MyPair<Integer, Integer>> removableRanges = new MyList<>();
+    private List<Pair<Integer, Integer>> findRemovableRanges(int[] lpsArray, int patternLength) {
+        List<Pair<Integer, Integer>> removableRanges = new List<>();
 
         int start = 0;
         for(int i = 0; i < lpsArray.length; i++) {
             if(lpsArray[i] != patternLength) {
                 continue;
             } else if(i-patternLength+1 >= start) {
-                removableRanges.add(new MyPair<>(i-patternLength+1,i));
+                removableRanges.add(new Pair<>(i-patternLength+1,i));
                 start = i + 1;
             }
         }
@@ -88,8 +88,8 @@ public class MyLibrary {
     /**
      * This method extracts the tokens removing patterns
      */
-    private MyList<String> extractTokens(MyList<MyPair<Integer, Integer>> ranges, String string) {
-        MyList<String> tokens = new MyList<>();
+    private List<String> extractTokens(List<Pair<Integer, Integer>> ranges, String string) {
+        List<String> tokens = new List<>();
 
         // First interval (0 to firstValue of first range)
         // Append in string takes n^2, that's why I used StringBuffer
@@ -137,9 +137,9 @@ public class MyLibrary {
         int[] lpsArray = computeLPS(charArray, pattern.length());
 
         // find ranges that would be removed from the string
-        MyList<MyPair<Integer, Integer>> removableRanges = findRemovableRanges(lpsArray, pattern.length());
+        List<Pair<Integer, Integer>> removableRanges = findRemovableRanges(lpsArray, pattern.length());
 
-        MyList<String> tokens = extractTokens(removableRanges, string);
+        List<String> tokens = extractTokens(removableRanges, string);
         for(int i = 0; i < tokens.size(); i++)
             System.out.println(tokens.get(i));
     }

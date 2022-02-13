@@ -1,76 +1,105 @@
 package bangla.stemmer;
 
+import my.library.List;
+import my.library.Pair;
 import my.library.Trie;
-
-import java.io.*;
 import java.net.URL;
+import java.io.File;
 import java.util.TreeMap;
-import java.util.TreeSet;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.BufferedReader;
 
 public class Stemmer {
-    private TreeSet<String> notStem;
-    private TreeSet<String> bochonSuffixes;
-    private TreeSet<String> bivoktiSuffixes;
-    private TreeSet<String> extraSuffixes;
-    private TreeMap<String, String> replaceSuffixes;
-    private TreeSet<String> otherSuffixes;
+    private Trie notStem;
+    private Trie bochonSuffixes;
+    private Trie bivoktiSuffixes;
+    private Trie otherSuffixes;
+
+    private List<String> extraSuffixes;
+    private List<Pair<String, String>> replaceSuffixes;
+    private List<Pair<String, String>> replaceWithDot;
 
 
     public Stemmer() throws IOException {
-        notStem = new TreeSet<>();
-        bochonSuffixes = new TreeSet<>();
-        bivoktiSuffixes = new TreeSet<>();
-        extraSuffixes = new TreeSet<>();
-        replaceSuffixes = new TreeMap<>();
-        otherSuffixes = new TreeSet<>();
+        notStem = new Trie();
+        bochonSuffixes = new Trie();
+        bivoktiSuffixes = new Trie();
+        otherSuffixes = new Trie();
+
+        extraSuffixes = new List<>();
+        replaceSuffixes = new List<>();
+        replaceWithDot = new List<>();
 
         // read not stem
-        //readAndStore(notStem, "not_stemming.txt");
+        readAndStoreToTrie(notStem, "not_stemming.txt");
 
         // read bochon suffixes
-        //readAndStore(bochonSuffixes, "bochon_suffixes.txt");
+        readAndStoreToTrie(bochonSuffixes, "bochon_suffixes.txt");
 
         // read bivokti suffixes
-        //readAndStore(bivoktiSuffixes, "bivokti_suffixes.txt");
-
-        // read extra suffixes
-        //readAndStore(extraSuffixes, "extra_suffixes.txt");
-
-        // read replaceable suffixes
-        // ............................
+        readAndStoreToTrie(bivoktiSuffixes, "bivokti_suffixes.txt");
 
         // read other suffixes
-        //readAndStore(otherSuffixes, "other_suffixes.txt");
+        readAndStoreToTrie(otherSuffixes, "other_suffixes.txt");
+
+        // read extra suffixes
+        readAndStoreToList(extraSuffixes, "extra_suffixes.txt");
+
+        // read replaceable suffixes
+        readAndStoreToList1(replaceSuffixes, "replace_suffixes.txt");
+
+        // replace suffixes with dot
+        readAndStoreToList1(replaceWithDot, "replace_suffixes_with_dot.txt");
     }
 
-    private void readAndStore(TreeSet<String> set, String fileName) throws IOException {
+
+    private void readAndStoreToTrie(Trie trie, String fileName) throws IOException {
         URL url = this.getClass().getResource(fileName);
         File file = new File(url.getFile());
         BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
         while (bufferedReader.ready()) {
             String line = bufferedReader.readLine();
             line = line.trim();
-            System.out.println(line);
-            set.add(line);
+            if(line.length() < 1) continue;
+            //System.out.println(line);
+            trie.add(line);
         }
         bufferedReader.close();
     }
 
-    private void readAndStore(TreeMap<String, String> set, String fileName) throws IOException {
+    private void readAndStoreToList(List<String> list, String fileName) throws IOException {
         URL url = this.getClass().getResource(fileName);
         File file = new File(url.getFile());
         BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
         while (bufferedReader.ready()) {
             String line = bufferedReader.readLine();
             line = line.trim();
-            System.out.println(line);
-            set.put(line, line);
+            if(line.length() < 1) continue;
+            //System.out.println(line);
+            list.add(line);
+        }
+        bufferedReader.close();
+    }
+
+    private void readAndStoreToList1(List<Pair<String, String>> list, String fileName) throws IOException {
+        URL url = this.getClass().getResource(fileName);
+        File file = new File(url.getFile());
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+        while (bufferedReader.ready()) {
+            String line = bufferedReader.readLine();
+            String[] tokens = line.split("->");
+            if(tokens.length <= 1) continue;
+            tokens[0] = tokens[0].trim();
+            tokens[1] = tokens[1].trim();
+            //System.out.println(tokens[0] + "->" + tokens[1]);
+            list.add(new Pair<>(tokens[0], tokens[1]));
         }
         bufferedReader.close();
     }
 
 
-    private boolean suffixMatcher(String suffix, String word) {
+    private boolean matchSuffix(String suffix, String word) {
         int m = suffix.length()-1;
         int n = word.length()-1;
 
@@ -89,15 +118,63 @@ public class Stemmer {
         return true;
     }
 
+
     public String findStem(String word) {
         word = word.trim();
 
-        for(int i = word.length()-1; i >= 0; i++) {
+        if(notStem.contains(word)) {
+            return word;
+        }
+
+        for(int i = word.length()-1; i >= 0; i--) {
             String suffix = word.substring(i);
             if(notStem.contains(suffix)) {
                 return word;
             } else if(bochonSuffixes.contains(suffix)) {
                 word = word.substring(0, i);
+                return word;
+            } else if(bivoktiSuffixes.contains(suffix)) {
+                word = word.substring(0, i);
+                return word;
+            } else if(otherSuffixes.contains(suffix)) {
+                word = word.substring(0, i);
+                return word;
+            }
+        }
+
+        // extra suffixes
+//        for(int i = 0; i < extraSuffixes.size(); i++) {
+//            String suffix = extraSuffixes.get(i);
+//            if(matchSuffix(suffix, word)) {
+//                word = word.substring(0, word.length()-suffix.length());
+//                return word;
+//            }
+//        }
+
+        // replace suffixes
+        for(int i = 0; i < replaceSuffixes.size(); i++) {
+            String suffix = replaceSuffixes.get(i).getFirst();
+            if(matchSuffix(suffix, word)) {
+                word = word.substring(0, word.length()-suffix.length());
+                word += replaceSuffixes.get(i).getSecond();
+                return word;
+            }
+        }
+
+
+        // replace for replace with dot
+        for(int i = 0; i < replaceWithDot.size(); i++) {
+            String suffix = replaceWithDot.get(i).getFirst();
+            if(matchSuffix(suffix, word)) {
+                StringBuffer sb = new StringBuffer(word);
+                int k = word.length()-suffix.length();
+                String addSuffix = replaceWithDot.get(i).getSecond();
+                for(int j = 0; j < addSuffix.length(); k++, j++) {
+                    if(addSuffix.charAt(j) != '.') {
+                        sb.setCharAt(k, addSuffix.charAt(j));
+                    }
+                }
+                word = sb.substring(0, k);
                 return word;
             }
         }
@@ -105,9 +182,15 @@ public class Stemmer {
         return word;
     }
 
+
     public static void main(String[] args) throws IOException {
         Stemmer stemmer = new Stemmer();
-        // create trie instead of TreeSet
-
+        // create trie instead of Trie
+        String str = "বদনের কাজে নাম বলের বোল্টে";
+        String[] tokens = str.split(" ");
+        for(int i = 0; i < tokens.length; i++) {
+            String word = tokens[i].trim();
+            System.out.println(stemmer.findStem(word));
+        }
     }
 }

@@ -1,6 +1,6 @@
 package com.company;
 
-import my.library.MyList;
+import my.library.List;
 import bangla.tokenizer.MyLibrary;
 
 public class Main {
@@ -11,7 +11,7 @@ public class Main {
     }
 
     private void check() {
-        MyList<Integer> list = new MyList<>();
+        List<Integer> list = new List<>();
         list.add(45);
         list.add(34);
         list.add(35);
