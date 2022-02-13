@@ -186,7 +186,7 @@ public class Stemmer {
     public static void main(String[] args) throws IOException {
         Stemmer stemmer = new Stemmer();
         // create trie instead of Trie
-        String str = "বদনের কাজে নাম বলের বোল্টে";
+        String str = "বদনের কাজে আসে করে গেলে হেসে কামালের";
         String[] tokens = str.split(" ");
         for(int i = 0; i < tokens.length; i++) {
             String word = tokens[i].trim();

@@ -1,25 +1,29 @@
 package bangla.tokenizer;
 
-import java.io.*;
-import java.net.URL;
+import my.library.List;
 
 public class Tokenizer {
-    public void method() throws IOException {
-        // reads first found file in this root directory
-//        URL url = Tokenizer.class.getResource("input.txt");
-       URL url = this.getClass().getResource("input.txt");
-       System.out.println(url);
-       File f = new File(url.getFile());
-       System.out.println(f == null);
-       BufferedReader bf = new BufferedReader(new FileReader(f));
+    private char DARI1 = '।';
+    private char DARI2 = '৷';
 
-       int ch;
-       while((ch = bf.read()) != -1) {
-           System.out.println((char)ch);
-       }
+    public List<String> getSentences(String text) {
+        List<String> sentences = new List<>();
+        // split sentences by dari
+        StringBuffer sb = new StringBuffer();
+        for(int i = 0; i < text.length(); i++) {
+            if(text.charAt(i) == DARI1 || text.charAt(i) == DARI2) {
+                String sentence = sb.toString().trim();
+                sentences.add(sentence);
+                sb = new StringBuffer();
+            } else {
+                sb.append(text.charAt(i));
+            }
+        }
+
+        return sentences;
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
 //        System.out.println(url.getPath());
 //        File f = new File(url.getFile());
@@ -28,8 +32,7 @@ public class Tokenizer {
 ////            fw.write('A');
 //        fw.write("sadf;laskdfj;lasfd");
 //        fw.close();
-
-        Tokenizer tokenizer = new Tokenizer();
-        tokenizer.method();
+        Tokenizer t = new Tokenizer();
+        System.out.println(t.DARI2 == '।');
     }
 }
