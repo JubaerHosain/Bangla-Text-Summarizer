@@ -1,75 +1,47 @@
 package com.company;
 
+import bangla.stemmer.Stemmer;
+import bangla.tokenizer.Tokenizer;
 import my.library.List;
-import bangla.tokenizer.MyLibrary;
+
+
+
+import java.io.*;
+import java.net.URL;
 
 public class Main {
 
-    private void start() {
-        MyLibrary myLibrary = new MyLibrary();
-        myLibrary.splitString(".", "My Name is Md Jubaer Hosain. I am a Student of University of Dhaka.");
+    private String readFile(String fileName) throws IOException {
+        URL url = this.getClass().getResource(fileName);
+        File file = new File(url.getFile());
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+        StringBuffer sb = new StringBuffer();
+        while (bufferedReader.ready()) {
+            sb.append(bufferedReader.readLine() + " ");
+        }
+        bufferedReader.close();
+        return sb.toString();
     }
 
-    private void check() {
-        List<Integer> list = new List<>();
-        list.add(45);
-        list.add(34);
-        list.add(35);
-        list.add(34545);
-        for(int i = 0; i < list.size(); i++)
-            System.out.print(list.get(i) + " ");
-        System.out.println();
 
-        list.remove(0);
-        for(int i = 0; i < list.size(); i++)
-            System.out.print(list.get(i) + " ");
-        System.out.println();
-
-        list.remove(0);
-        for(int i = 0; i < list.size(); i++)
-            System.out.print(list.get(i) + " ");
-        System.out.println();
-
-        list.add(242424);
-        for(int i = 0; i < list.size(); i++)
-            System.out.print(list.get(i) + " ");
-        System.out.println();
-
-        int[] a = new int[1];
-        a[0] = 99;
-        operation(a);
-        System.out.println(a[0]);
-    }
-
-    private void operation(int a[]) {
-        a = new int[1];
-        a[0] = 10;
-    }
-
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // write your code here
         Main main = new Main();
-//        main.start();
+        String text = main.readFile("input_file.txt");
+        System.out.println(text);
 
-//        int ch = 0980;
-//        char ch = 'ঀ';
-//        System.out.println(ch);
-//        System.out.println((int)ch);
-//        char c1 = (char)2432;
-//        System.out.println(c1);
-//        int hex = 0x9FF;
-//        System.out.println(hex);
+        Stemmer stemmer = new Stemmer();
 
-        String str1 = "গেল";
-        String str = ".েল";
+        Tokenizer tokenizer = new Tokenizer();
+        List<String> sentences = tokenizer.getSentences(text);
+        System.out.println(sentences.size());
 
-        String a[] = str1.split(str);
-//      System.out.println(a[0]);
-        System.out.println(str1.contains(str));
-
-        String input = "পুঞ্জ";
-        for(int i = 0; i < input.length(); i++) {
-            System.out.println(input.charAt(i));
+        for(int i = 0; i < sentences.size(); i++) {
+            String sentence = sentences.get(i);
+            List<String> words = tokenizer.getWords(sentence);
+            for(int j = 0; j < words.size(); j++)
+                System.out.println(words.get(j) + " -> " + stemmer.findStem(words.get(j)));
         }
+
     }
 }

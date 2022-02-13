@@ -142,15 +142,6 @@ public class Stemmer {
             }
         }
 
-        // extra suffixes
-//        for(int i = 0; i < extraSuffixes.size(); i++) {
-//            String suffix = extraSuffixes.get(i);
-//            if(matchSuffix(suffix, word)) {
-//                word = word.substring(0, word.length()-suffix.length());
-//                return word;
-//            }
-//        }
-
         // replace suffixes
         for(int i = 0; i < replaceSuffixes.size(); i++) {
             String suffix = replaceSuffixes.get(i).getFirst();
@@ -175,6 +166,15 @@ public class Stemmer {
                     }
                 }
                 word = sb.substring(0, k);
+                return word;
+            }
+        }
+
+        // extra suffixes
+        for(int i = 0; i < extraSuffixes.size(); i++) {
+            String suffix = extraSuffixes.get(i);
+            if(matchSuffix(suffix, word)) {
+                word = word.substring(0, word.length()-suffix.length());
                 return word;
             }
         }
