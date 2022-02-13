@@ -1,5 +1,6 @@
 package bangla.stemmer;
 
+import java.io.*;
 import java.net.URL;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -13,42 +14,59 @@ public class Stemmer {
     private TreeSet<String> otherSuffixes;
 
 
-    public Stemmer() {
+    public Stemmer() throws IOException {
         notStem = new TreeSet<>();
         bochonSuffixes = new TreeSet<>();
         bivoktiSuffixes = new TreeSet<>();
         extraSuffixes = new TreeSet<>();
         replaceSuffixes = new TreeMap<>();
         otherSuffixes = new TreeSet<>();
-        readNotStem();
-        readBochonSuffixes();
-        readBivoktiSuffixes();
-        readExtraSuffixes();
-        readReplaceSuffixes();
-        readOtherSuffixes();
+
+        // read not stem
+        //readAndStore(notStem, "not_stemming.txt");
+
+        // read bochon suffixes
+        //readAndStore(bochonSuffixes, "bochon_suffixes.txt");
+
+        // read bivokti suffixes
+        //readAndStore(bivoktiSuffixes, "bivokti_suffixes.txt");
+
+        // read extra suffixes
+        //readAndStore(extraSuffixes, "extra_suffixes.txt");
+
+        // read replaceable suffixes
+        // ............................
+
+        // read other suffixes
+        //readAndStore(otherSuffixes, "other_suffixes.txt");
     }
 
-    private void readOtherSuffixes() {
-        URL path = Stemmer.class.getResource("myFile.txt");
-        System.out.println(path);
-//        File f = new File(path.getFile());
-//        reader = new BufferedReader(new FileReader(f));
+    private void readAndStore(TreeSet<String> set, String fileName) throws IOException {
+        URL url = this.getClass().getResource(fileName);
+        File file = new File(url.getFile());
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+        while (bufferedReader.ready()) {
+            String line = bufferedReader.readLine();
+            line = line.trim();
+            System.out.println(line);
+            set.add(line);
+        }
+        bufferedReader.close();
     }
 
-    private void readReplaceSuffixes() {
+    private void readAndStore(TreeMap<String, String> set, String fileName) throws IOException {
+        URL url = this.getClass().getResource(fileName);
+        File file = new File(url.getFile());
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+        while (bufferedReader.ready()) {
+            String line = bufferedReader.readLine();
+            line = line.trim();
+            System.out.println(line);
+            set.put(line, line);
+        }
+        bufferedReader.close();
     }
 
-    private void readExtraSuffixes() {
-    }
-
-    private void readBivoktiSuffixes() {
-    }
-
-    private void readBochonSuffixes() {
-    }
-
-    private void readNotStem() {
-    }
 
     private boolean suffixMatcher(String suffix, String word) {
         int m = suffix.length()-1;
@@ -60,8 +78,7 @@ public class Stemmer {
 
         while(m >= 0 && n >= 0) {
             if(suffix.charAt(m) == word.charAt(n) || suffix.charAt(m) == '.') {
-                m--;
-                n--;
+                m--; n--;
             } else {
                 return false;
             }
@@ -84,5 +101,10 @@ public class Stemmer {
         }
 
         return word;
+    }
+
+    public static void main(String[] args) throws IOException {
+        Stemmer stemmer = new Stemmer();
+        // create trie instead of TreeSet
     }
 }
