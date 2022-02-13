@@ -1,5 +1,7 @@
 package bangla.stemmer;
 
+import my.library.Trie;
+
 import java.io.*;
 import java.net.URL;
 import java.util.TreeMap;
@@ -106,5 +108,6 @@ public class Stemmer {
     public static void main(String[] args) throws IOException {
         Stemmer stemmer = new Stemmer();
         // create trie instead of TreeSet
+
     }
 }
