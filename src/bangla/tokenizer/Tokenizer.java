@@ -24,6 +24,8 @@ public class Tokenizer {
         escapChars.add('?');
         escapChars.add('!');
         escapChars.add('.');
+        escapChars.add(DARI1);
+        escapChars.add(DARI2);
     }
 
     public List<String> getSentences(String text) {
@@ -53,7 +55,7 @@ public class Tokenizer {
             if(escapChars.contains(sentence.charAt(i))) {
                 String word = sb.toString();
                 if(word.length() > 0)
-                    words.add(sb.toString());
+                    words.add(word);
                 sb = new StringBuffer();
             } else {
                 sb.append((char)sentence.charAt(i));
