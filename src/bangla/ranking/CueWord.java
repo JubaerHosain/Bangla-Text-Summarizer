@@ -1,4 +1,4 @@
-package bangla.sentence_ranking;
+package bangla.ranking;
 
 import my.library.Trie;
 
