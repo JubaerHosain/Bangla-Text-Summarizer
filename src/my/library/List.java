@@ -20,17 +20,21 @@ public class List<Type> {
         return this.size;
     }
 
-    public Type[] copyOf(Type[] array, int newLength) {
-        Type[] newArray = (Type[]) new Object[newLength];
-        for(int i = 0; i < array.length; i++) {
+    public Type[] toArray() {
+        Type[] newArray = (Type[]) new Object[size];
+        for(int i = 0; i < size; i++)
             newArray[i] = array[i];
-        }
         return newArray;
     }
 
     private void increaseArrayLength() {
         // Increase array size by twice
-        array = copyOf(array, 2*array.length);
+        int newLength = 2*array.length;
+        Type[] newArray = (Type[]) new Object[newLength];
+        for(int i = 0; i < array.length; i++) {
+            newArray[i] = array[i];
+        }
+        array = newArray;
     }
 
     public void add(Type element) {
