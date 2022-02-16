@@ -26,12 +26,12 @@ public class Sorter {
             newArray[inx++] = array[j++];
         }
         // copy elements of newArray to array
-        for(int l = 0; l < newArray.length; i++)
+        for(int l = 0; l < newArray.length; l++)
             array[left++] = newArray[l];
     }
 
     /**Overloaded sort method*/
-    public static <T> void sort(T[] array, int left, int right, Comparator<T> comparator) {
+    private static <T> void sort(T[] array, int left, int right, Comparator<T> comparator) {
         if (array == null) {
             throw new IllegalArgumentException("array is null.");
         }
@@ -58,5 +58,8 @@ public class Sorter {
         }
         T[] array = list.toArray();
         sort(array, 0, array.length-1, comparator);
+        // restore to the actual list
+        for(int i = 0; i < array.length; i++)
+            list.replaceAt(i, array[i]);
     }
 }

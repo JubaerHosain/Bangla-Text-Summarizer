@@ -52,7 +52,17 @@ public class List<Type> {
         }
     }
 
-    public void remove(int index) {
+    public void replaceAt(int index, Type element) {
+        index = Math.abs(index);
+        if(index < size) {
+            array[index] = element;
+        } else {
+            throw new ArrayIndexOutOfBoundsException();
+        }
+    }
+
+    public void removeFrom(int index) {
+        index = Math.abs(index);
         if(index < size) {
             array[index] = null;
             while(index < size) {

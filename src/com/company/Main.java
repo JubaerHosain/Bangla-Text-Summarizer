@@ -3,9 +3,12 @@ package com.company;
 import bangla.stemmer.Stemmer;
 import bangla.tokenizer.Tokenizer;
 import my.library.List;
+import my.library.Sorter;
 
 import java.io.*;
 import java.net.URL;
+import java.util.Comparator;
+import java.util.Scanner;
 
 public class Main {
 
@@ -42,10 +45,32 @@ public class Main {
 //        }
 
 
-        char ch = '!';
-        char ch1 = '!';
-        System.out.println((int)'।');
-        System.out.println((int)'৷');
+//        char ch = '!';
+//        char ch1 = '!';
+//        System.out.println((int)'।');
+//        System.out.println((int)'৷');
 
+        Scanner in = new Scanner(System.in);
+
+        int n = in.nextInt();
+
+        List<Integer> a = new List<>();
+        for(int i = 0; i < n; i++) {
+            int num = in.nextInt();
+            a.add(num);
+        }
+
+        class MyCmp implements Comparator<Integer> {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o1 - o2;
+            }
+        }
+
+        Sorter.sort(a, new MyCmp());
+
+        for(int i = 0; i < a.size(); i++) {
+            System.out.print(a.get(i) + " ");
+        }
     }
 }
