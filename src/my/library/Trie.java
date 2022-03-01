@@ -5,11 +5,11 @@ import java.util.TreeMap;
 
 public class Trie {
     private class TrieNode {
-        boolean endOfWord;
+        int count;
         Map<Character, TrieNode> children;
         public TrieNode() {
             children = new TreeMap<>();
-            endOfWord = false;
+            count = 0;
         }
     }
 
@@ -29,7 +29,7 @@ public class Trie {
             }
             currentNode = node;
         }
-        currentNode.endOfWord = true;
+        currentNode.count += 1;
     }
 
     public boolean contains(String word) {
@@ -41,16 +41,15 @@ public class Trie {
             }
             currentNode = node;
         }
-        return currentNode.endOfWord;
+        return currentNode.count > 0;
     }
 
     private boolean remove(TrieNode currentNode, String word, int index) {
         if(index == word.length()) {
-            if(!currentNode.endOfWord) {
-                return false;
+            if(currentNode.count > 0) {
+                currentNode.count--;
             }
-            currentNode.endOfWord = false;
-            return currentNode.children.size() == 0;
+            return currentNode.children.size() == 0 && currentNode.count <= 0;
         }
 
         char ch = word.charAt(index);
@@ -62,7 +61,7 @@ public class Trie {
         // recursion
         if(remove(node, word, index+1)) {
             currentNode.children.remove(ch);
-            return (currentNode.children.size() == 0) && !currentNode.endOfWord;
+            return (currentNode.children.size() == 0) && currentNode.count <= 0;
         }
 
         return false;
