@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class Trie {
-     private class TrieNode {
+    private class TrieNode {
         boolean endOfWord;
         Map<Character, TrieNode> children;
         public TrieNode() {
