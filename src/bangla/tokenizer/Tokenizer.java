@@ -1,6 +1,6 @@
 package bangla.tokenizer;
 
-import my.library.List;
+import my.library.MyList;
 import java.util.TreeSet;
 
 public class Tokenizer {
@@ -27,8 +27,8 @@ public class Tokenizer {
         escapChars.add(DARI2);
     }
 
-    public List<String> getSentences(String text) {
-        List<String> sentences = new List<>();
+    public MyList<String> getSentences(String text) {
+        MyList<String> sentences = new MyList<>();
         // split TEXT by dari
         StringBuffer sb = new StringBuffer();
         for(int i = 0; i < text.length(); i++) {
@@ -47,8 +47,8 @@ public class Tokenizer {
     /** split sentences by space, comma, double quote,
      * single quote question mark, exclamation sign, dot
      */
-    public List<String> getWords(String sentence) {
-        List<String> words = new List<>();
+    public MyList<String> getWords(String sentence) {
+        MyList<String> words = new MyList<>();
         StringBuffer sb = new StringBuffer();
         for(int i = 0; i < sentence.length(); i++) {
             if(escapChars.contains(sentence.charAt(i))) {

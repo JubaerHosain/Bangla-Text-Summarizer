@@ -1,11 +1,10 @@
 package bangla.stemmer;
 
-import my.library.List;
+import my.library.MyList;
 import my.library.Pair;
 import my.library.Trie;
 import java.net.URL;
 import java.io.File;
-import java.util.TreeMap;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.BufferedReader;
@@ -16,9 +15,9 @@ public class Stemmer {
     private Trie bivoktiSuffixes;
     private Trie otherSuffixes;
 
-    private List<String> extraSuffixes;
-    private List<Pair<String, String>> replaceSuffixes;
-    private List<Pair<String, String>> replaceWithDot;
+    private MyList<String> extraSuffixes;
+    private MyList<Pair<String, String>> replaceSuffixes;
+    private MyList<Pair<String, String>> replaceWithDot;
 
 
     public Stemmer() throws IOException {
@@ -27,9 +26,9 @@ public class Stemmer {
         bivoktiSuffixes = new Trie();
         otherSuffixes = new Trie();
 
-        extraSuffixes = new List<>();
-        replaceSuffixes = new List<>();
-        replaceWithDot = new List<>();
+        extraSuffixes = new MyList<>();
+        replaceSuffixes = new MyList<>();
+        replaceWithDot = new MyList<>();
 
         // read not stem
         readAndStoreToTrie(notStem, "not_stemming.txt");
@@ -68,7 +67,7 @@ public class Stemmer {
         bufferedReader.close();
     }
 
-    private void readAndStoreToList(List<String> list, String fileName) throws IOException {
+    private void readAndStoreToList(MyList<String> myList, String fileName) throws IOException {
         URL url = this.getClass().getResource(fileName);
         File file = new File(url.getFile());
         BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
@@ -77,12 +76,12 @@ public class Stemmer {
             line = line.trim();
             if(line.length() < 1) continue;
             //System.out.println(line);
-            list.add(line);
+            myList.add(line);
         }
         bufferedReader.close();
     }
 
-    private void readAndStoreToList1(List<Pair<String, String>> list, String fileName) throws IOException {
+    private void readAndStoreToList1(MyList<Pair<String, String>> myList, String fileName) throws IOException {
         URL url = this.getClass().getResource(fileName);
         File file = new File(url.getFile());
         BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
@@ -93,7 +92,7 @@ public class Stemmer {
             tokens[0] = tokens[0].trim();
             tokens[1] = tokens[1].trim();
             //System.out.println(tokens[0] + "->" + tokens[1]);
-            list.add(new Pair<>(tokens[0], tokens[1]));
+            myList.add(new Pair<>(tokens[0], tokens[1]));
         }
         bufferedReader.close();
     }

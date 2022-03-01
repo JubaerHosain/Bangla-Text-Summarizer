@@ -1,14 +1,11 @@
 package com.company;
 
-import bangla.stemmer.Stemmer;
-import bangla.tokenizer.Tokenizer;
-import my.library.List;
+import my.library.MyList;
 import my.library.MyComparator;
 import my.library.Sorter;
 
 import java.io.*;
 import java.net.URL;
-import java.util.Comparator;
 import java.util.Scanner;
 
 public class Main {
@@ -55,7 +52,7 @@ public class Main {
 
         int n = in.nextInt();
 
-        List<Integer> a = new List<>();
+        MyList<Integer> a = new MyList<>();
         for(int i = 0; i < n; i++) {
             int num = in.nextInt();
             a.add(num);

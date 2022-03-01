@@ -50,14 +50,14 @@ public class Sorter {
     }
 
     /**Overloaded sort method*/
-    public static <T> void sort(List<T> list, MyComparator<T> comparator) {
-        if (list == null) {
+    public static <T> void sort(MyList<T> myList, MyComparator<T> comparator) {
+        if (myList == null) {
             throw new IllegalArgumentException("list is null.");
         }
-        T[] array = list.toArray();
+        T[] array = myList.toArray();
         sort(array, 0, array.length-1, comparator);
         // restore to the actual list
         for(int i = 0; i < array.length; i++)
-            list.replaceAt(i, array[i]);
+            myList.replaceAt(i, array[i]);
     }
 }

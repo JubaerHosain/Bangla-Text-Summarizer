@@ -4,15 +4,15 @@ package my.library;
 /**
  * This is my custom List class that would be used in this project
  */
-public class List<Type> {
+public class MyList<Type> {
     private int size = 0;
     private Type[] array;
 
-    public List() {
+    public MyList() {
         array = (Type[]) new Object[1000];
     }
 
-    public List(int maxSize) {
+    public MyList(int maxSize) {
         array = (Type[]) new Object[maxSize];
     }
 
