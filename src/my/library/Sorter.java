@@ -1,10 +1,8 @@
 package my.library;
 
-import java.util.Comparator;
-
 /**Implements merge sort algorithm*/
 public class Sorter {
-    private static <T> void merge(T[] array, int left, int mid, int right, Comparator<T> comparator) {
+    private static <T> void merge(T[] array, int left, int mid, int right, MyComparator<T> comparator) {
         int i = left, j = mid+1;
         T[] newArray = (T[]) new Object[right-left+1];
         // merge in newArray in sorted order
@@ -31,7 +29,7 @@ public class Sorter {
     }
 
     /**Overloaded sort method*/
-    private static <T> void sort(T[] array, int left, int right, Comparator<T> comparator) {
+    private static <T> void sort(T[] array, int left, int right, MyComparator<T> comparator) {
         if (array == null) {
             throw new IllegalArgumentException("array is null.");
         }
@@ -44,7 +42,7 @@ public class Sorter {
     }
 
     /**Overloaded sort method*/
-    public static <T> void sort(T[] array, Comparator<T> comparator) {
+    public static <T> void sort(T[] array, MyComparator<T> comparator) {
         if (array == null) {
             throw new IllegalArgumentException("array is null.");
         }
@@ -52,7 +50,7 @@ public class Sorter {
     }
 
     /**Overloaded sort method*/
-    public static <T> void sort(List<T> list, Comparator<T> comparator) {
+    public static <T> void sort(List<T> list, MyComparator<T> comparator) {
         if (list == null) {
             throw new IllegalArgumentException("list is null.");
         }

@@ -3,6 +3,7 @@ package com.company;
 import bangla.stemmer.Stemmer;
 import bangla.tokenizer.Tokenizer;
 import my.library.List;
+import my.library.MyComparator;
 import my.library.Sorter;
 
 import java.io.*;
@@ -60,10 +61,10 @@ public class Main {
             a.add(num);
         }
 
-        class MyCmp implements Comparator<Integer> {
+        class MyCmp implements MyComparator<Integer> {
             @Override
             public int compare(Integer o1, Integer o2) {
-                return o1 - o2;
+                return o1.compareTo(o2);
             }
         }
 
