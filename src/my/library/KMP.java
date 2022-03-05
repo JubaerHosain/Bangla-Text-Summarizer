@@ -1,22 +1,11 @@
-import my.library.MyList;
-import my.library.Pair;
+package my.library;
 
-public class MyLibrary {
+/** KMP String Matching Algorithm */
+public class KMP {
 
-    public MyLibrary() {
-
+    public KMP() {
+        
     }
-
-
-    /**
-     * This method prints an integer array
-     */
-    public void print_Array(int[] array) {
-        for(int i = 0; i < array.length; i++)
-            System.out.print(array[i] + " ");
-        System.out.println();
-    }
-
 
     /**
      * This method converts a String to array of character.
