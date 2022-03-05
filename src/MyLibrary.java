@@ -1,5 +1,3 @@
-package bangla.tokenizer;
-
 import my.library.MyList;
 import my.library.Pair;
 

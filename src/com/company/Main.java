@@ -1,16 +1,13 @@
 package com.company;
 
-import bangla.stemmer.Stemmer;
-import bangla.sw_remover.SWRemover;
-import bangla.tokenizer.Tokenizer;
+
 import my.library.MyList;
-import my.library.MyComparator;
-import my.library.Sorter;
-import my.library.Trie;
+import pre_processing.SWRemover;
+import pre_processing.Stemmer;
+import pre_processing.Tokenizer;
 
 import java.io.*;
 import java.net.URL;
-import java.util.Scanner;
 
 public class Main {
 

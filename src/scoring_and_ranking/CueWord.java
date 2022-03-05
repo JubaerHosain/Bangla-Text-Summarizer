@@ -1,6 +1,7 @@
-package bangla.ranking;
+package scoring_and_ranking;
 
 import my.library.Trie;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
