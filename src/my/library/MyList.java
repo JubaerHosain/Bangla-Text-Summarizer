@@ -9,7 +9,7 @@ public class MyList<Type> {
     private Type[] array;
 
     public MyList() {
-        array = (Type[]) new Object[15];
+        array = (Type[]) new Object[10];
     }
 
     public MyList(int maxSize) {
@@ -38,9 +38,8 @@ public class MyList<Type> {
     }
 
     public void add(Type element) {
-        if(array.length - size <= 5) {
+        if(array.length - size <= 5)
             increaseArrayLength();
-        }
         array[size++] = element;
     }
 

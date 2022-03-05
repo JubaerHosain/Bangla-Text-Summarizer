@@ -1,4 +1,4 @@
-package bangla.sw_remover;
+package pre_processing;
 
 
 import my.library.MyList;

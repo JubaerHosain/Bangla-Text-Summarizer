@@ -46,10 +46,10 @@ public class Stemmer {
         readAndStoreToList(extraSuffixes, "extra_suffixes.txt");
 
         // read replaceable suffixes
-        readAndStoreToList1(replaceSuffixes, "replace_suffixes.txt");
+        readAndStoreToListOfPair(replaceSuffixes, "replace_suffixes.txt");
 
         // replace suffixes with dot
-        readAndStoreToList1(replaceWithDot, "replace_suffixes_with_dot.txt");
+        readAndStoreToListOfPair(replaceWithDot, "replace_suffixes_with_dot.txt");
     }
 
 
@@ -81,7 +81,7 @@ public class Stemmer {
         bufferedReader.close();
     }
 
-    private void readAndStoreToList1(MyList<Pair<String, String>> myList, String fileName) throws IOException {
+    private void readAndStoreToListOfPair(MyList<Pair<String, String>> myList, String fileName) throws IOException {
         URL url = this.getClass().getResource(fileName);
         File file = new File(url.getFile());
         BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
@@ -179,6 +179,10 @@ public class Stemmer {
         }
 
         return word;
+    }
+
+    public MyList<MyList<String>> stem(MyList<MyList<String>> tokenizedText) {
+        return tokenizedText;
     }
 
 

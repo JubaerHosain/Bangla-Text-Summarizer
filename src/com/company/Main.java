@@ -1,5 +1,7 @@
 package com.company;
 
+import bangla.sw_remover.SWRemover;
+import bangla.tokenizer.Tokenizer;
 import my.library.MyList;
 import my.library.MyComparator;
 import my.library.Sorter;
@@ -23,10 +25,20 @@ public class Main {
         return sb.toString();
     }
 
+    private void printList(MyList<MyList<String>> list) {
+        for(int i = 0; i < list.size(); i++) {
+            MyList<String> tokens = list.get(i);
+            System.out.print((i+1) + ": ");
+            for(int j = 0; j < tokens.size(); j++) {
+                System.out.print(tokens.get(j) + " ");
+            }
+            System.out.println();
+        }
+    }
 
     public static void main(String[] args) throws IOException {
         // write your code here
-//        Main main = new Main();
+        Main main = new Main();
 //        String text = main.readFile("input_file.txt");
 //        System.out.println(text);
 
@@ -72,16 +84,31 @@ public class Main {
 //            System.out.print(a.get(i) + " ");
 //        }
 
-        Trie trie = new Trie();
-        trie.add("Jubaer");
-        trie.add("Jubaer");
-        trie.add("Jubaer Hosain");
-        System.out.println(trie.contains("Jubaer"));
-        trie.remove("Jubaer");
-        trie.remove("Jubaer");
-        System.out.println(trie.contains("Jubaer"));
-        System.out.println(trie.contains("Jubaer Hosain"));
-        trie.remove("Jubaer");
+//        Trie trie = new Trie();
+//        trie.add("Jubaer");
+//        trie.add("Jubaer");
+//        trie.add("Jubaer Hosain");
+//        System.out.println(trie.contains("Jubaer"));
+//        trie.remove("Jubaer");
+//        trie.remove("Jubaer");
+//        System.out.println(trie.contains("Jubaer"));
+//        System.out.println(trie.contains("Jubaer Hosain"));
+//        trie.remove("Jubaer");
+
+        Tokenizer tokenizer = new Tokenizer();
+        String txt = main.readFile("input_file.txt");
+        MyList<MyList<String>> tokenizedText = tokenizer.tokenize(txt);
+
+
+        char ch = '“';
+        char ch1 = '“';
+        System.out.println((int)ch);
+
+        SWRemover swRemover = new SWRemover();
+        tokenizedText = swRemover.remove(tokenizedText);
+
+        main.printList(tokenizedText);
+
 
     }
 }

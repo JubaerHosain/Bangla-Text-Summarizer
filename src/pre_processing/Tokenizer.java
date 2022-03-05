@@ -1,9 +1,6 @@
-package bangla.tokenizer;
+package pre_processing;
 
 import my.library.MyList;
-import my.library.Sorter;
-
-import java.util.TreeSet;
 
 public class Tokenizer {
     private char DARI1 = '।';
