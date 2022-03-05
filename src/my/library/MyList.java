@@ -9,7 +9,7 @@ public class MyList<Type> {
     private Type[] array;
 
     public MyList() {
-        array = (Type[]) new Object[1000];
+        array = (Type[]) new Object[15];
     }
 
     public MyList(int maxSize) {
@@ -28,8 +28,8 @@ public class MyList<Type> {
     }
 
     private void increaseArrayLength() {
-        // Increase array size by twice
-        int newLength = 2*array.length;
+        // Increase array size by 100%
+        int newLength = array.length + array.length;
         Type[] newArray = (Type[]) new Object[newLength];
         for(int i = 0; i < array.length; i++) {
             newArray[i] = array[i];
