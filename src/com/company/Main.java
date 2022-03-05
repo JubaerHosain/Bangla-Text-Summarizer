@@ -1,5 +1,6 @@
 package com.company;
 
+import bangla.stemmer.Stemmer;
 import bangla.sw_remover.SWRemover;
 import bangla.tokenizer.Tokenizer;
 import my.library.MyList;
@@ -106,7 +107,10 @@ public class Main {
 
         SWRemover swRemover = new SWRemover();
         tokenizedText = swRemover.remove(tokenizedText);
+        main.printList(tokenizedText);
 
+        Stemmer stemmer = new Stemmer();
+        tokenizedText = stemmer.stemText(tokenizedText);
         main.printList(tokenizedText);
 
 

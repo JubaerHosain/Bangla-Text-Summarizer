@@ -17,9 +17,9 @@ public class SWRemover {
 
     public SWRemover() throws IOException {
         stopWords = new Trie();
-        readStopWords("bangla_stopwords.txt");
-        readStopWords("bangla_stopwords1.txt");
-        readStopWords("bangla_stopwords2.txt");
+        readStopWords("1_bangla_stopwords.txt");
+        readStopWords("2_bangla_stopwords1.txt");
+        readStopWords("3_bangla_stopwords2.txt");
     }
 
     private void readStopWords(String fileName) throws IOException {

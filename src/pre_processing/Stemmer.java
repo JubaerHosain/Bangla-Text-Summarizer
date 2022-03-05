@@ -1,13 +1,14 @@
-package bangla.stemmer;
+package pre_processing;
 
 import my.library.MyList;
 import my.library.Pair;
 import my.library.Trie;
-import java.net.URL;
+
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.BufferedReader;
+import java.net.URL;
 
 public class Stemmer {
     private Trie notStem;
