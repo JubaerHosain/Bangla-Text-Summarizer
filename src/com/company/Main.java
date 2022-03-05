@@ -3,6 +3,7 @@ package com.company;
 import my.library.MyList;
 import my.library.MyComparator;
 import my.library.Sorter;
+import my.library.Trie;
 
 import java.io.*;
 import java.net.URL;
@@ -48,27 +49,39 @@ public class Main {
 //        System.out.println((int)'।');
 //        System.out.println((int)'৷');
 
-        Scanner in = new Scanner(System.in);
+//        Scanner in = new Scanner(System.in);
+//
+//        int n = in.nextInt();
+//
+//        MyList<Integer> a = new MyList<>();
+//        for(int i = 0; i < n; i++) {
+//            int num = in.nextInt();
+//            a.add(num);
+//        }
+//
+//        class MyCmp implements MyComparator<Integer> {
+//            @Override
+//            public int compare(Integer o1, Integer o2) {
+//                return o1.compareTo(o2);
+//            }
+//        }
+//
+//        Sorter.sort(a, new MyCmp());
+//
+//        for(int i = 0; i < a.size(); i++) {
+//            System.out.print(a.get(i) + " ");
+//        }
 
-        int n = in.nextInt();
+        Trie trie = new Trie();
+        trie.add("Jubaer");
+        trie.add("Jubaer");
+        trie.add("Jubaer Hosain");
+        System.out.println(trie.contains("Jubaer"));
+        trie.remove("Jubaer");
+        trie.remove("Jubaer");
+        System.out.println(trie.contains("Jubaer"));
+        System.out.println(trie.contains("Jubaer Hosain"));
+        trie.remove("Jubaer");
 
-        MyList<Integer> a = new MyList<>();
-        for(int i = 0; i < n; i++) {
-            int num = in.nextInt();
-            a.add(num);
-        }
-
-        class MyCmp implements MyComparator<Integer> {
-            @Override
-            public int compare(Integer o1, Integer o2) {
-                return o1.compareTo(o2);
-            }
-        }
-
-        Sorter.sort(a, new MyCmp());
-
-        for(int i = 0; i < a.size(); i++) {
-            System.out.print(a.get(i) + " ");
-        }
     }
 }

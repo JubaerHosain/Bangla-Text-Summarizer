@@ -7,10 +7,10 @@ public class Tokenizer {
     private char DARI1 = '।';
     private char DARI2 = '৷';
 
-    private TreeSet<Character> escapChars;
+    private MyList<Character> escapChars;
 
     public Tokenizer() {
-        escapChars = new TreeSet<>();
+        escapChars = new MyList<>();
         // add escap chars
         escapChars.add(' ');
         escapChars.add(',');
