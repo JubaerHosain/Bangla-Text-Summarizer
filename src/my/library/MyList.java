@@ -1,23 +1,44 @@
 package my.library;
 
-
 /**
  * This is my custom List class that would be used in this project
  */
 public class MyList<Type> {
     private int size = 0;
+    private int capacity = 10;
     private Type[] array;
 
     public MyList() {
-        array = (Type[]) new Object[10];
+        array = (Type[]) new Object[capacity];
     }
 
-    public MyList(int maxSize) {
-        array = (Type[]) new Object[maxSize];
+    public MyList(int capacity) {
+        this.capacity = capacity;
+        array = (Type[]) new Object[capacity];
+    }
+
+    public MyList(int capacity, Type value) {
+        this.capacity = capacity;
+        array = (Type[]) new Object[capacity];
+        fill(capacity, value);
     }
 
     public int size() {
         return this.size;
+    }
+
+    public int capacity() {
+        return this.capacity;
+    }
+
+    public void fill(int size, Type value) {
+        if(size > this.capacity) {
+            this.capacity = size;
+            array = (Type[]) new Object[capacity];
+        }
+        for(int i = 0; i < size; i++) {
+            array[i] = value;
+        }
     }
 
     public Type[] toArray() {

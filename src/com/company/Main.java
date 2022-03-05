@@ -1,15 +1,26 @@
 package com.company;
 
-
 import my.library.MyList;
 import pre_processing.SWRemover;
 import pre_processing.Stemmer;
 import pre_processing.Tokenizer;
+import scoring_and_ranking.CueWord;
 
 import java.io.*;
 import java.net.URL;
 
 public class Main {
+    private Tokenizer tokenizer;
+    private SWRemover swRemover;
+    private Stemmer stemmer;
+    private CueWord cueWord;
+
+    public Main() throws IOException {
+        tokenizer = new Tokenizer();
+        swRemover = new SWRemover();
+        stemmer = new Stemmer();
+        cueWord = new CueWord();
+    }
 
     private String readFile(String fileName) throws IOException {
         URL url = this.getClass().getResource(fileName);
@@ -97,19 +108,17 @@ public class Main {
         String txt = main.readFile("input_file.txt");
         MyList<MyList<String>> tokenizedText = tokenizer.tokenize(txt);
 
-
-        char ch = '“';
-        char ch1 = '“';
-        System.out.println((int)ch);
-
         SWRemover swRemover = new SWRemover();
-        tokenizedText = swRemover.remove(tokenizedText);
-        main.printList(tokenizedText);
+        //tokenizedText = swRemover.remove(tokenizedText);
+        //main.printList(tokenizedText);
 
-        Stemmer stemmer = new Stemmer();
-        tokenizedText = stemmer.stemText(tokenizedText);
-        main.printList(tokenizedText);
+        //Stemmer stemmer = new Stemmer();
+        //tokenizedText = stemmer.stemText(tokenizedText);
+        //main.printList(tokenizedText);
 
-
+        MyList<String> tokens = tokenizedText.get(0);
+        for(int i = 0; i < tokens.size()-1; i++) {
+            System.out.println(tokens.get(i) + " -> " + main.stemmer.stemWord(tokens.get(i)));
+        }
     }
 }
