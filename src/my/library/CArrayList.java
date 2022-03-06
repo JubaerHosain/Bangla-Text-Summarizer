@@ -1,22 +1,20 @@
 package my.library;
 
-/**
- * This is my custom List class that would be used in this project
- */
-public class MyList<Type> {
+public class CArrayList<Type> implements CList<Type> {
     private int size = 0;
     private int capacity = 10;
     private Type[] array;
 
-    public MyList() {
+    public CArrayList() {
         array = (Type[]) new Object[capacity];
     }
 
-    public MyList(int capacity) {
+    public CArrayList(int capacity) {
         this.capacity = capacity;
         array = (Type[]) new Object[capacity];
     }
 
+    @Override
     public int size() {
         return this.size;
     }
@@ -25,76 +23,80 @@ public class MyList<Type> {
         return this.capacity;
     }
 
-    public void fill(int size, Type value) {
-        if(size > this.capacity) {
-            this.capacity = size;
-            array = (Type[]) new Object[capacity];
-        }
-        for(int i = 0; i < size; i++) {
-            array[i] = value;
-        }
-    }
-
-    public Type[] toArray() {
-        Type[] newArray = (Type[]) new Object[size];
-        for(int i = 0; i < size; i++)
-            newArray[i] = array[i];
-        return newArray;
-    }
-
-    private void increaseArrayLength() {
-        // Increase array size by 100%
-        int newLength = array.length + array.length;
-        Type[] newArray = (Type[]) new Object[newLength];
-        for(int i = 0; i < array.length; i++) {
-            newArray[i] = array[i];
-        }
-        array = newArray;
-    }
-
+    @Override
     public void add(Type element) {
-        if(array.length - size <= 5)
+        if(capacity - size <= 5)
             increaseArrayLength();
         array[size++] = element;
     }
 
+    @Override
     public Type get(int index) {
-        if(index < size) {
+        if(index >= 0 && index < size) {
             return array[index];
         } else {
             throw new ArrayIndexOutOfBoundsException();
         }
     }
 
+    @Override
     public void replaceAt(int index, Type element) {
-        index = Math.abs(index);
-        if(index < size) {
+        if(index >= 0 && index < size) {
             array[index] = element;
         } else {
             throw new ArrayIndexOutOfBoundsException();
         }
     }
 
+    @Override
     public void removeFrom(int index) {
-        index = Math.abs(index);
-        if(index < size) {
+        if(index >= 0 && index < size) {
             array[index] = null;
             while(index < size) {
                 array[index] = array[index+1];
-                index = index + 1;
+                index += 1;
             }
-            size--;
+            size -= 1;
             array[index] = null;
         } else {
             throw new ArrayIndexOutOfBoundsException();
         }
     }
 
+    @Override
     public boolean contains(Type element) {
         for(int i = 0; i < size; i++) {
             if(array[i] == element)
                 return true;
         }
         return false;
+    }
+
+    @Override
+    public CIterator<Type> getIterator() {
+        CIterator<Type> iterator = new CIterator<>() {
+            int index = 0;
+            @Override
+            public boolean hasNext() {
+                return index < size && array[index] != null;
+            }
+
+            @Override
+            public Type next() {
+                return array[index++];
+            }
+        };
+        return iterator;
+    }
+
+    // private methods
+    private void increaseArrayLength() {
+        // Increase array size by 50%
+        capacity = array.length + (array.length / 2);
+        Type[] newArray = (Type[]) new Object[capacity];
+        for(int i = 0; i < array.length; i++) {
+            newArray[i] = array[i];
+        }
+        array = newArray;
     }
 }

@@ -4,7 +4,7 @@ package my.library;
 public class KMP {
 
     public KMP() {
-        
+
     }
 
     /**
