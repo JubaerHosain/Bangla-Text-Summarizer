@@ -1,5 +1,8 @@
 package com.company;
 
+import my.library.CArrayList;
+import my.library.CIterator;
+import my.library.CList;
 import my.library.MyList;
 import pre_processing.SWRemover;
 import pre_processing.Stemmer;
@@ -104,11 +107,11 @@ public class Main {
 //        System.out.println(trie.contains("Jubaer Hosain"));
 //        trie.remove("Jubaer");
 
-        Tokenizer tokenizer = new Tokenizer();
-        String txt = main.readFile("input_file.txt");
-        MyList<MyList<String>> tokenizedText = tokenizer.tokenize(txt);
-
-        SWRemover swRemover = new SWRemover();
+//        Tokenizer tokenizer = new Tokenizer();
+//        String txt = main.readFile("input_file.txt");
+//        MyList<MyList<String>> tokenizedText = tokenizer.tokenize(txt);
+//
+//        SWRemover swRemover = new SWRemover();
         //tokenizedText = swRemover.remove(tokenizedText);
         //main.printList(tokenizedText);
 
@@ -116,9 +119,21 @@ public class Main {
         //tokenizedText = stemmer.stemText(tokenizedText);
         //main.printList(tokenizedText);
 
-        MyList<String> tokens = tokenizedText.get(0);
-        for(int i = 0; i < tokens.size()-1; i++) {
-            System.out.println(tokens.get(i) + " -> " + main.stemmer.stemWord(tokens.get(i)));
+//        MyList<String> tokens = tokenizedText.get(0);
+//        for(int i = 0; i < tokens.size()-1; i++) {
+//            System.out.println(tokens.get(i) + " -> " + main.stemmer.stemWord(tokens.get(i)));
+//        }
+
+        CList<Integer> list = new CArrayList<>();
+        list.add(2);
+        list.add(4);
+        list.add(3);
+        list.add(6);
+        list.add(8);
+        list.add(9);
+        CIterator iterator = list.getIterator();
+        while (iterator.hasNext()) {
+            System.out.print(iterator.next() + " ");
         }
     }
 }

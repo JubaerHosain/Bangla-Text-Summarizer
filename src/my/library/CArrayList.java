@@ -1,5 +1,9 @@
 package my.library;
 
+/**
+ * Implements using dynamic array
+ * @param <Type>
+ */
 public class CArrayList<Type> implements CList<Type> {
     private int size = 0;
     private int capacity = 10;
@@ -49,6 +53,11 @@ public class CArrayList<Type> implements CList<Type> {
     }
 
     @Override
+    public void insertAt(int index, Type element) {
+
+    }
+
+    @Override
     public void removeFrom(int index) {
         if(index >= 0 && index < size) {
             array[index] = null;
@@ -76,9 +85,15 @@ public class CArrayList<Type> implements CList<Type> {
     public CIterator<Type> getIterator() {
         CIterator<Type> iterator = new CIterator<>() {
             int index = 0;
+
             @Override
             public boolean hasNext() {
                 return index < size && array[index] != null;
+            }
+
+            @Override
+            public boolean hasPrevious() {
+                return false;
             }
 
             @Override

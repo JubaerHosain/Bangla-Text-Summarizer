@@ -5,6 +5,7 @@ public interface CList<Type> extends CIterable<Type>{
     public void add(Type element);
     public Type get(int index);
     public void replaceAt(int index, Type element);
+    public void insertAt(int index, Type element);
     public void removeFrom(int index);
     public boolean contains(Type element);
 }
