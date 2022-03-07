@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class Stemmer {
     private Trie notStem;
@@ -20,8 +22,10 @@ public class Stemmer {
     private MyList<Pair<String, String>> replaceSuffixes;
     private MyList<Pair<String, String>> replaceWithDot;
 
-
+    Set<String> set;
     public Stemmer() throws IOException {
+        set = new TreeSet<>();
+
         notStem = new Trie();
         bochonSuffixes = new Trie();
         bivoktiSuffixes = new Trie();
@@ -32,25 +36,25 @@ public class Stemmer {
         replaceWithDot = new MyList<>();
 
         // read not stem
-        readAndStoreToTrie(notStem, "6_not_stemming.txt");
+        //readAndStoreToTrie(notStem, "2_not_stemming.txt");
 
         // read bochon suffixes
-        readAndStoreToTrie(bochonSuffixes, "4_bochon_suffixes.txt");
+        //readAndStoreToTrie(bochonSuffixes, "4_bochon_suffixes.txt");
 
         // read bivokti suffixes
-        readAndStoreToTrie(bivoktiSuffixes, "3_bivokti_suffixes.txt");
+        //readAndStoreToTrie(bivoktiSuffixes, "3_bivokti_suffixes.txt");
 
         // read other suffixes
-        readAndStoreToTrie(otherSuffixes, "7_other_suffixes.txt");
+        //readAndStoreToTrie(otherSuffixes, "7_other_suffixes.txt");
 
         // read extra suffixes
-        readAndStoreToList(extraSuffixes, "5_extra_suffixes.txt");
+        //readAndStoreToList(extraSuffixes, "5_extra_suffixes.txt");
 
         // read replaceable suffixes
-        readAndStoreToListOfPair(replaceSuffixes, "8_replace_suffixes.txt");
+        //readAndStoreToListOfPair(replaceSuffixes, "4_replace_suffixes.txt");
 
         // replace suffixes with dot
-        readAndStoreToListOfPair(replaceWithDot, "9_replace_suffixes_with_dot.txt");
+        //readAndStoreToListOfPair(replaceWithDot, "9_replace_suffixes_with_dot.txt");
     }
 
 
@@ -63,6 +67,7 @@ public class Stemmer {
             line = line.trim();
             if(line.length() < 1) continue;
             //System.out.println(line);
+            set.add(line);
             trie.add(line);
         }
         bufferedReader.close();
@@ -194,12 +199,9 @@ public class Stemmer {
 
     public static void main(String[] args) throws IOException {
         Stemmer stemmer = new Stemmer();
-        // create trie instead of Trie
-        String str = "বদনের কাজে আসে করে গেলে হেসে কামালের";
-        String[] tokens = str.split(" ");
-        for(int i = 0; i < tokens.length; i++) {
-            String word = tokens[i].trim();
-            System.out.println(stemmer.stemWord(word));
-        }
+        stemmer.readAndStoreToTrie(stemmer.bochonSuffixes, "9_replace_suffixes_with_dot.txt");
+
+        for(String str:stemmer.set)
+            System.out.println(str);
     }
 }
