@@ -9,14 +9,18 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Set;
+import java.util.TreeSet;
 
 /** Bengali Stop Word Remover*/
 public class SWRemover {
 
     private Trie stopWords;
+    Set<String> set;
 
     public SWRemover() throws IOException {
         stopWords = new Trie();
+        set = new TreeSet<>();
         readStopWords("1_bangla_stopwords.txt");
     }
 
@@ -27,7 +31,8 @@ public class SWRemover {
         StringBuffer sb = new StringBuffer();
         while (bufferedReader.ready()) {
             String stopWord = bufferedReader.readLine();
-            stopWord.trim();
+            stopWord = stopWord.trim();
+            set.add(stopWord);
             stopWords.add(stopWord);
         }
         bufferedReader.close();
@@ -50,5 +55,11 @@ public class SWRemover {
             tokenizedText.replaceAt(i, newTokens);
         }
         return tokenizedText;
+    }
+
+    public static void main(String args[]) throws IOException {
+        SWRemover swRemover = new SWRemover();
+        for(String str: swRemover.set)
+            System.out.println(str);
     }
 }
