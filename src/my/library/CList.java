@@ -8,4 +8,5 @@ public interface CList<Type> extends CIterable<Type>{
     public void insertAt(int index, Type element);
     public void removeFrom(int index);
     public boolean contains(Type element);
+    public Type[] toArray();
 }

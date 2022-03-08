@@ -82,6 +82,14 @@ public class CArrayList<Type> implements CList<Type> {
     }
 
     @Override
+    public Type[] toArray() {
+        Type[] newArray = (Type[]) new Object[size];
+        for(int i = 0; i < size; i++)
+            newArray[i] = this.array[i];
+        return newArray;
+    }
+
+    @Override
     public CIterator<Type> getIterator() {
         CIterator<Type> iterator = new CIterator<>() {
             int index = 0;

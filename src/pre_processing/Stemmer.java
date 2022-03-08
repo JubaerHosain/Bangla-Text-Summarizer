@@ -1,6 +1,7 @@
 package pre_processing;
 
-import my.library.MyList;
+import my.library.CArrayList;
+import my.library.CList;
 import my.library.Pair;
 import my.library.Trie;
 
@@ -18,9 +19,9 @@ public class Stemmer {
     private Trie bivoktiSuffixes;
     private Trie otherSuffixes;
 
-    private MyList<String> extraSuffixes;
-    private MyList<Pair<String, String>> replaceSuffixes;
-    private MyList<Pair<String, String>> replaceWithDot;
+    private CList<String> extraSuffixes;
+    private CList<Pair<String, String>> replaceSuffixes;
+    private CList<Pair<String, String>> replaceWithDot;
 
     Set<String> set;
     public Stemmer() throws IOException {
@@ -31,9 +32,9 @@ public class Stemmer {
         bivoktiSuffixes = new Trie();
         otherSuffixes = new Trie();
 
-        extraSuffixes = new MyList<>();
-        replaceSuffixes = new MyList<>();
-        replaceWithDot = new MyList<>();
+        extraSuffixes = new CArrayList<>();
+        replaceSuffixes = new CArrayList<>();
+        replaceWithDot = new CArrayList<>();
 
         // read not stem
         //readAndStoreToTrie(notStem, "2_not_stemming.txt");
@@ -73,7 +74,7 @@ public class Stemmer {
         bufferedReader.close();
     }
 
-    private void readAndStoreToList(MyList<String> myList, String fileName) throws IOException {
+    private void readAndStoreToList(CList<String> myList, String fileName) throws IOException {
         URL url = this.getClass().getResource(fileName);
         File file = new File(url.getFile());
         BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
@@ -87,7 +88,7 @@ public class Stemmer {
         bufferedReader.close();
     }
 
-    private void readAndStoreToListOfPair(MyList<Pair<String, String>> myList, String fileName) throws IOException {
+    private void readAndStoreToListOfPair(CList<Pair<String, String>> myList, String fileName) throws IOException {
         URL url = this.getClass().getResource(fileName);
         File file = new File(url.getFile());
         BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
@@ -187,7 +188,7 @@ public class Stemmer {
         return word;
     }
 
-    public MyList<MyList<String>> stemText(MyList<MyList<String>> tokenizedText) {
+    public CList<CList<String>> stemText(CList<CList<String>> tokenizedText) {
         for(int i = 0; i < tokenizedText.size(); i++) {
             for(int j = 0; j < tokenizedText.get(i).size(); j++) {
                 String stem = stemWord(tokenizedText.get(i).get(j));

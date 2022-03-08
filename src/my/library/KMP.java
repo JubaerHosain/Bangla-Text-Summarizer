@@ -56,8 +56,8 @@ public class KMP {
     /**
      * This method finds the ranges(pattern range) which will be removed from the string
      */
-    private MyList<Pair<Integer, Integer>> findRemovableRanges(int[] lpsArray, int patternLength) {
-        MyList<Pair<Integer, Integer>> removableRanges = new MyList<>();
+    private CList<Pair<Integer, Integer>> findRemovableRanges(int[] lpsArray, int patternLength) {
+        CList<Pair<Integer, Integer>> removableRanges = new CArrayList<>();
 
         int start = 0;
         for(int i = 0; i < lpsArray.length; i++) {
@@ -75,8 +75,8 @@ public class KMP {
     /**
      * This method extracts the tokens removing patterns
      */
-    private MyList<String> extractTokens(MyList<Pair<Integer, Integer>> ranges, String string) {
-        MyList<String> tokens = new MyList<>();
+    private CList<String> extractTokens(CList<Pair<Integer, Integer>> ranges, String string) {
+        CList<String> tokens = new CArrayList<>();
 
         // First interval (0 to firstValue of first range)
         // Append in string takes n^2, that's why I used StringBuffer
@@ -124,9 +124,9 @@ public class KMP {
         int[] lpsArray = computeLPS(charArray, pattern.length());
 
         // find ranges that would be removed from the string
-        MyList<Pair<Integer, Integer>> removableRanges = findRemovableRanges(lpsArray, pattern.length());
+        CList<Pair<Integer, Integer>> removableRanges = findRemovableRanges(lpsArray, pattern.length());
 
-        MyList<String> tokens = extractTokens(removableRanges, string);
+        CList<String> tokens = extractTokens(removableRanges, string);
         for(int i = 0; i < tokens.size(); i++)
             System.out.println(tokens.get(i));
     }

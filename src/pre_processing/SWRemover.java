@@ -1,7 +1,8 @@
 package pre_processing;
 
 
-import my.library.MyList;
+import my.library.CArrayList;
+import my.library.CList;
 import my.library.Trie;
 
 import java.io.BufferedReader;
@@ -39,8 +40,8 @@ public class SWRemover {
     }
 
     // remove stop words from sentences
-    private MyList<String> removeWords(MyList<String> tokens) {
-        MyList<String> newTokens = new MyList<>();
+    private CList<String> removeWords(CList<String> tokens) {
+        CList<String> newTokens = new CArrayList<>();
         for(int i = 0; i < tokens.size(); i++) {
             if(!stopWords.contains(tokens.get(i)))
                 newTokens.add(tokens.get(i));
@@ -49,9 +50,9 @@ public class SWRemover {
     }
 
 
-    public MyList<MyList<String>> remove(MyList<MyList<String>> tokenizedText) {
+    public CList<CList<String>> remove(CList<CList<String>> tokenizedText) {
         for(int i = 0; i < tokenizedText.size(); i++) {
-            MyList<String> newTokens = removeWords(tokenizedText.get(i));
+            CList<String> newTokens = removeWords(tokenizedText.get(i));
             tokenizedText.replaceAt(i, newTokens);
         }
         return tokenizedText;

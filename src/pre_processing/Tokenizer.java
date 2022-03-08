@@ -1,15 +1,16 @@
 package pre_processing;
 
-import my.library.MyList;
+import my.library.CArrayList;
+import my.library.CList;
 
 public class Tokenizer {
     private char DARI1 = '।';
     private char DARI2 = '৷';
 
-    private MyList<Character> escapChars;
+    private CList<Character> escapChars;
 
     public Tokenizer() {
-        escapChars = new MyList<>();
+        escapChars = new CArrayList<>();
         // add escap chars
         escapChars.add(' ');
         escapChars.add(',');
@@ -27,8 +28,8 @@ public class Tokenizer {
     }
 
     /** split text to sentences */
-    private MyList<String> getSentences(String text) {
-        MyList<String> sentences = new MyList<>();
+    private CList<String> getSentences(String text) {
+        CList<String> sentences = new CArrayList<>();
         // split TEXT by dari
         StringBuffer sb = new StringBuffer();
         for(int i = 0; i < text.length(); i++) {
@@ -47,8 +48,8 @@ public class Tokenizer {
     /** split sentences by space, comma, double quote,
      * single quote question mark, exclamation sign, dot
      */
-    private MyList<String> getWords(String sentence) {
-        MyList<String> words = new MyList<>();
+    private CList<String> getWords(String sentence) {
+        CList<String> words = new CArrayList<>();
         StringBuffer sb = new StringBuffer();
         for(int i = 0; i < sentence.length(); i++) {
             if(escapChars.contains(sentence.charAt(i))) {
@@ -68,12 +69,12 @@ public class Tokenizer {
         return words;
     }
 
-    public MyList<MyList<String>> tokenize(String inputText) {
+    public CList<CList<String>> tokenize(String inputText) {
         // Each sentence with tokenized words
-        MyList<MyList<String>> tokenizedText = new MyList<>();
-        MyList<String> sentences = getSentences(inputText);
+        CList<CList<String>> tokenizedText = new CArrayList<>();
+        CList<String> sentences = getSentences(inputText);
         for(int i = 0; i < sentences.size(); i++) {
-            MyList<String> words = getWords(sentences.get(i));
+            CList<String> words = getWords(sentences.get(i));
             tokenizedText.add(words);
         }
 

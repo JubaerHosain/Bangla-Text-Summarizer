@@ -113,6 +113,18 @@ public class CLinkedList<Type> implements CList<Type> {
     }
 
     @Override
+    public Type[] toArray() {
+        Type[] newArray = (Type[]) new Object[size];
+        int index = 0;
+        Node current = head;
+        while(current != null) {
+            newArray[index++] = current.data;
+            current = current.next;
+        }
+        return newArray;
+    }
+
+    @Override
     public CIterator<Type> getIterator() {
         CIterator iterator = new CIterator() {
             Node current = head;
