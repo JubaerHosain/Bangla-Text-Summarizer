@@ -18,44 +18,41 @@ public class Stemmer {
     private Trie bochonSuffixes;
     private Trie bivoktiSuffixes;
     private Trie otherSuffixes;
+    private Trie extraSuffixes;
 
-    private CList<String> extraSuffixes;
     private CList<Pair<String, String>> replaceSuffixes;
     private CList<Pair<String, String>> replaceWithDot;
 
-    Set<String> set;
     public Stemmer() throws IOException {
-        set = new TreeSet<>();
-
         notStem = new Trie();
         bochonSuffixes = new Trie();
         bivoktiSuffixes = new Trie();
         otherSuffixes = new Trie();
+        extraSuffixes = new Trie();
 
-        extraSuffixes = new CArrayList<>();
         replaceSuffixes = new CArrayList<>();
         replaceWithDot = new CArrayList<>();
 
         // read not stem
-        //readAndStoreToTrie(notStem, "2_not_stemming.txt");
+        readAndStoreToTrie(notStem, "2_not_stemming.txt");
 
         // read bochon suffixes
-        //readAndStoreToTrie(bochonSuffixes, "4_bochon_suffixes.txt");
+        readAndStoreToTrie(bochonSuffixes, "3_bochon_suffixes.txt");
 
         // read bivokti suffixes
-        //readAndStoreToTrie(bivoktiSuffixes, "3_bivokti_suffixes.txt");
+        readAndStoreToTrie(bivoktiSuffixes, "4_bivokti_suffixes.txt");
 
         // read other suffixes
-        //readAndStoreToTrie(otherSuffixes, "7_other_suffixes.txt");
+        readAndStoreToTrie(otherSuffixes, "5_other_suffixes.txt");
 
         // read extra suffixes
-        //readAndStoreToList(extraSuffixes, "5_extra_suffixes.txt");
+        readAndStoreToTrie(extraSuffixes, "6_extra_suffixes.txt");
 
         // read replaceable suffixes
-        //readAndStoreToListOfPair(replaceSuffixes, "4_replace_suffixes.txt");
+        readAndStoreToListOfPair(replaceSuffixes, "7_replace_suffixes.txt");
 
         // replace suffixes with dot
-        //readAndStoreToListOfPair(replaceWithDot, "9_replace_suffixes_with_dot.txt");
+        readAndStoreToListOfPair(replaceWithDot, "8_replace_suffixes_with_dot.txt");
     }
 
 
@@ -67,8 +64,6 @@ public class Stemmer {
             String line = bufferedReader.readLine();
             line = line.trim();
             if(line.length() < 1) continue;
-            //System.out.println(line);
-            set.add(line);
             trie.add(line);
         }
         bufferedReader.close();
@@ -177,10 +172,10 @@ public class Stemmer {
         }
 
         // extra suffixes
-        for(int i = 0; i < extraSuffixes.size(); i++) {
-            String suffix = extraSuffixes.get(i);
-            if(matchSuffix(suffix, word)) {
-                word = word.substring(0, word.length()-suffix.length());
+        for(int i = word.length()-1; i >= 0; i--) {
+            String suffix = word.substring(i);
+            if(extraSuffixes.contains(suffix)) {
+                word = word.substring(0, i);
                 return word;
             }
         }
@@ -200,9 +195,7 @@ public class Stemmer {
 
     public static void main(String[] args) throws IOException {
         Stemmer stemmer = new Stemmer();
-        stemmer.readAndStoreToTrie(stemmer.bochonSuffixes, "9_replace_suffixes_with_dot.txt");
-
-        for(String str:stemmer.set)
-            System.out.println(str);
+        stemmer.readAndStoreToTrie(stemmer.bochonSuffixes, "8_replace_suffixes_with_dot.txt");
+        System.out.print("sadfas;lkds");
     }
 }

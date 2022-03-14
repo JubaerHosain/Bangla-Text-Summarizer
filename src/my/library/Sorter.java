@@ -3,9 +3,7 @@ package my.library;
 class Sorter<Type> {
     private Type[] array;
 
-    public Sorter() {
-
-    }
+    public Sorter() {}
 
     /** marge two sorted segment */
     private void merge(int left, int mid, int right, CComparator<Type> comparator) {

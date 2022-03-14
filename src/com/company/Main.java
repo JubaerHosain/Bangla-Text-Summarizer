@@ -52,10 +52,10 @@ public class Main {
         // write your code here
         Main main = new Main();
 
-        //String inputText = main.readFile("input_file.txt");
+        String inputText = main.readFile("input_file.txt");
 
         // tokenize text
-        //CList<CList<String>> tokens = main.tokenizer.tokenize(inputText);
+        CList<CList<String>> tokens = main.tokenizer.tokenize(inputText);
 
         // remove stop words from tokens
         //tokens = main.swRemover.remove(tokens);
@@ -63,30 +63,12 @@ public class Main {
         // calculate cue word weight
 //        MyList<Integer> sentence_rank = main.ranker.toString();
 
-        CList<Integer> list = new CArrayList<>();
-        list.add(4);
-        list.add(2);
-        list.add(-8);
-        list.add(0);
-        list.add(67);
-        list.add(12);
-        list.add(9);
-        Library.sort(list, (obj1, obj2) -> obj1 - obj2);
+        for(int i = 0; i < tokens.size(); i++) {
+            CList<String> tmp = tokens.get(i);
+            for(int j = 0; j < tmp.size(); j++)
+                System.out.println(tmp.get(j) + " -> " + main.stemmer.stemWord(tmp.get(j)));
+        }
 
-        for(int i = 0; i < list.size(); i++)
-            System.out.print(list.get(i) + " ");
-        System.out.println();
-
-        Integer[] array = new Integer[5];
-        array[0] = 9;
-        array[1] = -9;
-        array[2] = 89;
-        array[3] = 18;
-        array[4] = -999;
-        Library.sort(array, (obj1, obj2) -> obj1 - obj2);
-
-        for(int i = 0; i < array.length; i++)
-            System.out.print(array[i] + " ");
     }
 }
 
