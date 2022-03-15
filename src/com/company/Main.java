@@ -22,7 +22,7 @@ public class Main {
         tokenizer = new Tokenizer();
         swRemover = new SWRemover();
         stemmer = new Stemmer();
-        ranker = new Ranker();
+        //ranker = new Ranker();
     }
 
     private String readFile(String fileName) throws IOException {

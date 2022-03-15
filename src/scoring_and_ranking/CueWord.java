@@ -15,10 +15,8 @@ import java.net.URL;
 public class CueWord {
     private Trie cueWords;
 
-    
     public CueWord() throws IOException {
         cueWords = new Trie();
-
         readCueWords(cueWords, "1_cue_words.txt");
     }
 

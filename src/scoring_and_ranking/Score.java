@@ -1,21 +1,28 @@
-package com.company;
+package scoring_and_ranking;
 
 /** Related variables for a Sentence */
-public class Sentence {
+public class Score {
     // sentence frequency using word frequency = STF
-    // positional value of this sentence = PV
+    // sum of all word_frequency of the sentence
+    // word frequency = how many times this word occurred in the total text
     private int sentenceFrequency;
-    private int positionalValue;
+
+    // positional value of this sentence = PV
+    // formula
+    private double positionalValue;
+
     private double cueWordWeight;
-    private double sentenceScore;
+    private double totalScore;
+
+    // position of sentence in the text
     private int actualPosition;
 
-    public Sentence(int actualPosition) {
+    public Score(int actualPosition) {
         this.actualPosition = actualPosition;
         sentenceFrequency = 0;
         positionalValue = 0;
         cueWordWeight = 0;
-        sentenceScore = 0;
+        totalScore = 0;
     }
 
     public int getSentenceFrequency() {
@@ -26,7 +33,7 @@ public class Sentence {
         this.sentenceFrequency = sentenceFrequency;
     }
 
-    public int getPositionalValue() {
+    public double getPositionalValue() {
         return positionalValue;
     }
 
@@ -42,12 +49,12 @@ public class Sentence {
         this.cueWordWeight = cueWordWeight;
     }
 
-    public double getSentenceScore() {
-        return sentenceScore;
+    public double getTotalScore() {
+        return totalScore;
     }
 
-    public void setSentenceScore(double sentenceScore) {
-        this.sentenceScore = sentenceScore;
+    public void setTotalScore(double totalScore) {
+        this.totalScore = totalScore;
     }
 
     public int getActualPosition() {

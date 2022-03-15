@@ -44,6 +44,18 @@ public class Trie {
         return currentNode.count > 0;
     }
 
+    public int getCount(String word) {
+        TrieNode currentNode = this.root;
+        for(char ch: word.toCharArray()) {
+            TrieNode node = currentNode.children.get(ch);
+            if(node == null) {
+                return 0;
+            }
+            currentNode = node;
+        }
+        return currentNode.count;
+    }
+
     private boolean remove(TrieNode currentNode, String word, int index) {
         if(index == word.length()) {
             if(currentNode.count > 0) {
