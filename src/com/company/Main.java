@@ -63,11 +63,14 @@ public class Main {
         // calculate cue word weight
 //        MyList<Integer> sentence_rank = main.ranker.toString();
 
-        for(int i = 0; i < tokens.size(); i++) {
-            CList<String> tmp = tokens.get(i);
-            for(int j = 0; j < tmp.size(); j++)
-                System.out.println(tmp.get(j) + " -> " + main.stemmer.stemWord(tmp.get(j)));
-        }
+//        for(int i = 0; i < tokens.size(); i++) {
+//            CList<String> tmp = tokens.get(i);
+//            for(int j = 0; j < tmp.size(); j++)
+//                System.out.println(tmp.get(j) + " -> " + main.stemmer.stemWord(tmp.get(j)));
+//        }
+
+        Ranker ranker = new Ranker(inputText, tokens);
+        ranker.rank();
 
     }
 }

@@ -19,6 +19,7 @@ public class Trie {
         this.root = new TrieNode();
     }
 
+    /** add word into trie */
     public void add(String word) {
         TrieNode currentNode = this.root;
         for(char ch: word.toCharArray()) {
@@ -32,6 +33,7 @@ public class Trie {
         currentNode.count += 1;
     }
 
+    /** check a words contains in the trie or not */
     public boolean contains(String word) {
         TrieNode currentNode = this.root;
         for(char ch: word.toCharArray()) {
@@ -44,6 +46,7 @@ public class Trie {
         return currentNode.count > 0;
     }
 
+    /** returns number of times a word pushed into the trie */
     public int getCount(String word) {
         TrieNode currentNode = this.root;
         for(char ch: word.toCharArray()) {
@@ -56,6 +59,7 @@ public class Trie {
         return currentNode.count;
     }
 
+    /** remove a word from the trie(recursive) */
     private boolean remove(TrieNode currentNode, String word, int index) {
         if(index == word.length()) {
             if(currentNode.count > 0) {
@@ -79,6 +83,7 @@ public class Trie {
         return false;
     }
 
+    /** remove a word from the trie */
     public void remove(String word) {
         remove(this.root, word, 0);
     }
