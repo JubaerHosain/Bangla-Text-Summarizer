@@ -8,10 +8,12 @@ public class Score {
     private int sentenceFrequency;
 
     // positional value of this sentence = PV
-    // formula
+    // formula .........................................
     private double positionalValue;
 
-    private double cueWordWeight;
+    private double cueWordsWeight;
+
+    private double skeletonWeight;
     private double totalScore;
 
     // position of sentence in the text
@@ -19,10 +21,11 @@ public class Score {
 
     public Score(int actualPosition) {
         this.actualPosition = actualPosition;
-        sentenceFrequency = 0;
-        positionalValue = 0;
-        cueWordWeight = 0;
-        totalScore = 0;
+        this.sentenceFrequency = 0;
+        this.positionalValue = 0;
+        this.cueWordsWeight = 0;
+        this.totalScore = 0;
+        this.skeletonWeight = 0;
     }
 
     public int getSentenceFrequency() {
@@ -37,16 +40,24 @@ public class Score {
         return positionalValue;
     }
 
-    public void setPositionalValue(int positionalValue) {
+    public void setPositionalValue(double positionalValue) {
         this.positionalValue = positionalValue;
     }
 
-    public double getCueWordWeight() {
-        return cueWordWeight;
+    public double getCueWordsWeight() {
+        return cueWordsWeight;
     }
 
-    public void setCueWordWeight(double cueWordWeight) {
-        this.cueWordWeight = cueWordWeight;
+    public void setCueWordsWeight(double cueWordsWeight) {
+        this.cueWordsWeight = cueWordsWeight;
+    }
+
+    public double getSkeletonWeight() {
+        return skeletonWeight;
+    }
+
+    public void setSkeletonWeight(double skeletonWeight) {
+        this.skeletonWeight = skeletonWeight;
     }
 
     public double getTotalScore() {

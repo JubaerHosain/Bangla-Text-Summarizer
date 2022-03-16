@@ -11,8 +11,19 @@ import java.io.IOException;
 import java.net.URL;
 
 public class Ranker {
-    private String inputText;
-    CList<CList<String>>  preProcessedSentences;
+    // co-factor of sentence total frequency
+    private final double ALPHA = 0.22;
+    // co-factor of positional value
+    private final double BETA = 0.11;
+    // cue word weight for each sentence
+    private final double GAMA = 0.65;
+    // weight of skeleton of document
+    private final double LAMBDA = 0.25;
+
+    // tokenized but not stemmed
+    CList<CList<String>> tokenizedText;
+    // all preprocessing done
+    CList<CList<String>>  preProcessedText;
 
     private Trie cueWords;
     private Trie frequencyTrie;
@@ -20,17 +31,21 @@ public class Ranker {
     private CList<Score> scores;
     private int noOfSentences;
 
-    public Ranker() {
-        this.noOfSentences = 20;
-        this.scores = new CArrayList<>(noOfSentences);
-    }
+    public Ranker(CList<CList<String>> tokenizedText, CList<CList<String>> preProcessedText) throws IOException {
+        this.noOfSentences = preProcessedText.size();
+        this.tokenizedText = tokenizedText;
+        this.preProcessedText = preProcessedText;
 
-    public Ranker(String inputText, CList<CList<String>> preProcessedSentences) throws IOException {
-        this.noOfSentences = preProcessedSentences.size();
-        this.inputText = inputText;
-        this.preProcessedSentences = preProcessedSentences;
-        frequencyTrie = new Trie();
-        scores = new CArrayList<>(noOfSentences);
+        this.frequencyTrie = new Trie();
+
+        // initialize scores list with Score Object (given actual position of sentence)
+        this.scores = new CArrayList<>(this.noOfSentences);
+        for(int i = 0; i < this.noOfSentences; i++) {
+            this.scores.add(new Score(i));
+        }
+
+        this.cueWords = new Trie();
+        this.readCueWords("1_cue_words.txt");
     }
 
     /** stores cue words into a trie */
@@ -42,67 +57,78 @@ public class Ranker {
             String line = bufferedReader.readLine();
             line = line.trim();
             if(line.length() < 1) continue;
-
             //System.out.println(line);
             cueWords.add(line);
         }
         bufferedReader.close();
     }
 
-    /** initialize scores list with Score Object */
-    private void initializeScores() {
-        for(int i = 0; i < noOfSentences; i++) {
-           scores.add(new Score(i));
-        }
-    }
-
     /** calculate sentence frequency using word frequency */
     private void calculateFrequency() {
         // add pre-processed text to frequency trie
-        for(int i = 0; i < preProcessedSentences.size(); i++) {
-            CList<String> sentence = preProcessedSentences.get(i);
+        for(int i = 0; i < preProcessedText.size(); i++) {
+            CList<String> sentence = preProcessedText.get(i);
             for(int j = 0; j < sentence.size(); j++)
                 frequencyTrie.add(sentence.get(j));
         }
 
         // add sentence frequency to each sentence score
         for(int i = 0; i < noOfSentences; i++) {
-            CList<String> sentence = preProcessedSentences.get(i);
+            CList<String> sentence = preProcessedText.get(i);
             int frequencySum = 0;
             for(int j = 0; j < sentence.size(); j++) {
                 frequencySum += frequencyTrie.getCount(sentence.get(j));
             }
-            Score score = scores.get(i);
-            score.setSentenceFrequency(frequencySum);
+            scores.get(i).setSentenceFrequency(frequencySum);
         }
     }
 
+    /** calculate positional value for each sentences */
     private void calculatePositionalValue() {
+        for(int i = 0; i < this.noOfSentences; i++) {
+            scores.get(i).setPositionalValue(1/(i+1));
+        }
+    }
+
+    /** this method takes input tokenized text(not stemmed)*/
+    private void calculateCueWordWeight(CList<CList<String>> tokenizedText) {
+        // add cue word weight to each sentence
+        // if it contains at least one cue word
+        for(int i = 0; i < this.noOfSentences; i++) {
+            CList<String> sentence = tokenizedText.get(i);
+            for(int j = 0; j < sentence.size(); j++) {
+                if(this.cueWords.contains(sentence.get(j))) {
+                    this.scores.get(i).setCueWordsWeight(this.GAMA);
+                    break;
+                }
+            }
+        }
+    }
+
+    private void calculateSkeletonWeight() {
 
     }
 
-    private void calculateCueWordWeight() {
-
-    }
-
+    /** finally calculate actual total score for each sentence */
     private void calculateTotalScore() {
-
+        for(int i = 0; i < this.noOfSentences; i++) {
+            Score score = scores.get(i);
+            double totalScore = (this.ALPHA * score.getSentenceFrequency());
+            totalScore += (this.BETA * score.getPositionalValue());
+            totalScore += score.getCueWordsWeight() + score.getSkeletonWeight();
+            score.setTotalScore(totalScore);
+        }
     }
-
-
 
 
     public void rank() {
-        initializeScores();
         calculateFrequency();
-
-
-
+        calculatePositionalValue();
+        calculateTotalScore();
     }
 
     public static void main(String[] args) {
-        Ranker ranker = new Ranker();
-        ranker.rank();
+
     }
 }
 

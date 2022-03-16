@@ -10,3 +10,8 @@
 তাই বর্তমানকালে শিক্ষার দ্বারা ব্যক্তির সামগ্রিক বিকাশের উপর বিশেষ গুরুত্ব আরোপ করা হচ্ছে। এই প্রয়াস শিক্ষার উদ্দেশ্য সম্বন্ধিত বিতর্ককে আরো একবার উস্কে দিয়ে সনাতন ভারতীয় ঐতিহ্য
 অনুসারে শিক্ষার উদ্দেশ্যকেই ধারণাকেই মান্যতা দেয়। এই ধারণা অনুযায়ী শিক্ষার উদ্দেশ্য হল ব্যক্তির সামগ্রিক চরিত্রের গঠন। অর্থাৎ সেই শিক্ষাই হলো প্রকৃত শিক্ষা যা ব্যক্তিকে আত্মশক্তিতে বলীয়ান
 করে জীবনের তুল্যমূল্য বিচারের ক্ষমতা দান করে। তাই নিঃসন্দেহেই বলা যায় যে- "আত্মশক্তি অর্জনই শিক্ষার উদ্দেশ্য"।
+
+Here I am going to use the algorithm proposed by Md. Iftekharul Alam Efat, Mohammad Ibrahim, Humayun Kayesh in “Automated Bangla Text Summarization by Sentence Scoring and Ranking” published in 2013 International Conference on Informatics, Electronics and Vision (ICIEV)
+DOI: 10.1109/ICIEV.2013.6572686
+Publisher: IEEE
+Conference Location: Dhaka, Bangladesh

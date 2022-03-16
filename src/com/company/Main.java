@@ -37,6 +37,19 @@ public class Main {
         return sb.toString();
     }
 
+    private void writeFile(String fileName) throws IOException {
+        URL url = this.getClass().getResource(fileName);
+        File file = new File(url.getFile());
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
+
+        String str = "Hello World";
+        for(int i = 0; i < 17; i++)
+            bufferedWriter.write("Hello World1+1 ");
+            System.out.println(url.getFile());
+
+        bufferedWriter.close();
+    }
+
     private void printList(CList<CList<String>> list) {
         for(int i = 0; i < list.size(); i++) {
             CList<String> tokens = list.get(i);
@@ -53,6 +66,7 @@ public class Main {
         Main main = new Main();
 
         String inputText = main.readFile("input_file.txt");
+        System.out.println(inputText);
 
         // tokenize text
         CList<CList<String>> tokens = main.tokenizer.tokenize(inputText);
@@ -69,9 +83,16 @@ public class Main {
 //                System.out.println(tmp.get(j) + " -> " + main.stemmer.stemWord(tmp.get(j)));
 //        }
 
-        Ranker ranker = new Ranker(inputText, tokens);
+        Ranker ranker = new Ranker(tokens, tokens);
         ranker.rank();
 
+
+        main.writeFile("output_file.txt");
+
+        System.out.println("hello");
+
+        File file = new File("Bangla-Text-Summarizer\\src\\com\\company\\input_file.txt");
+        System.out.println(file.toString());
     }
 }
 

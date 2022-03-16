@@ -12,7 +12,10 @@ over the world.
 
 Most of the text summarization techniques are implemented in two different ways, known as abstractive or extractive approach. My “Bangla Text Summarizer” tool will deal with the summarization of Bangla text based on extractive method.
 
-For my project, I am going to implement the algorithm proposed by Sheikh Abujar, Mahmudul Hasan, M.S.I Shahin and Syed Akhter Hossain in “A Heuristic Approach of Text Summarization for Bengali Documentation,” 8th International Conference on Computing, Communication and Networking Technologies (ICCCNT), pp. 1-8. IEEE, 2017.
+Here I am going to use the algorithm proposed by Md. Iftekharul Alam Efat, Mohammad Ibrahim, Humayun Kayesh in “Automated Bangla Text Summarization by Sentence Scoring and Ranking” published in 2013 International Conference on Informatics, Electronics and Vision (ICIEV)
+DOI: 10.1109/ICIEV.2013.6572686
+Publisher: IEEE
+Conference Location: Dhaka, Bangladesh
 
 Languages or Tools to be used: Java
 
