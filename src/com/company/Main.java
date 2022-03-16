@@ -45,7 +45,6 @@ public class Main {
         String str = "Hello World";
         for(int i = 0; i < 17; i++)
             bufferedWriter.write("Hello World1+1 ");
-            System.out.println(url.getFile());
 
         bufferedWriter.close();
     }
@@ -66,33 +65,16 @@ public class Main {
         Main main = new Main();
 
         String inputText = main.readFile("input_file.txt");
-        System.out.println(inputText);
+        //System.out.println(inputText);
 
         // tokenize text
         CList<CList<String>> tokens = main.tokenizer.tokenize(inputText);
-
-        // remove stop words from tokens
-        //tokens = main.swRemover.remove(tokens);
-
-        // calculate cue word weight
-//        MyList<Integer> sentence_rank = main.ranker.toString();
-
-//        for(int i = 0; i < tokens.size(); i++) {
-//            CList<String> tmp = tokens.get(i);
-//            for(int j = 0; j < tmp.size(); j++)
-//                System.out.println(tmp.get(j) + " -> " + main.stemmer.stemWord(tmp.get(j)));
-//        }
 
         Ranker ranker = new Ranker(tokens, tokens);
         ranker.rank();
 
 
         main.writeFile("output_file.txt");
-
-        System.out.println("hello");
-
-        File file = new File("Bangla-Text-Summarizer\\src\\com\\company\\input_file.txt");
-        System.out.println(file.toString());
     }
 }
 

@@ -1,8 +1,6 @@
 package scoring_and_ranking;
 
-import my.library.CArrayList;
-import my.library.CList;
-import my.library.Trie;
+import my.library.*;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -32,6 +30,11 @@ public class Ranker {
     private int noOfSentences;
 
     public Ranker(CList<CList<String>> tokenizedText, CList<CList<String>> preProcessedText) throws IOException {
+        if(tokenizedText.size() != preProcessedText.size()) {
+            throw new ArrayIndexOutOfBoundsException("size of tokenizedText and preProcessedText is not equal");
+        }
+
+
         this.noOfSentences = preProcessedText.size();
         this.tokenizedText = tokenizedText;
         this.preProcessedText = preProcessedText;
@@ -91,11 +94,11 @@ public class Ranker {
     }
 
     /** this method takes input tokenized text(not stemmed)*/
-    private void calculateCueWordWeight(CList<CList<String>> tokenizedText) {
+    private void calculateCueWordWeight() {
         // add cue word weight to each sentence
         // if it contains at least one cue word
         for(int i = 0; i < this.noOfSentences; i++) {
-            CList<String> sentence = tokenizedText.get(i);
+            CList<String> sentence = this.tokenizedText.get(i);
             for(int j = 0; j < sentence.size(); j++) {
                 if(this.cueWords.contains(sentence.get(j))) {
                     this.scores.get(i).setCueWordsWeight(this.GAMA);
@@ -124,7 +127,19 @@ public class Ranker {
     public void rank() {
         calculateFrequency();
         calculatePositionalValue();
+        calculateCueWordWeight();
+        calculateSkeletonWeight();
         calculateTotalScore();
+
+        // sort sentences in descending order of totalScore
+        // then frequency, cue word weight, skeleton weight, positional value
+        Library.sort(scores, new CComparator<Score>() {
+            @Override
+            public int compare(Score obj1, Score obj2) {
+                // write your logic
+                return 0;
+            }
+        });
     }
 
     public static void main(String[] args) {
