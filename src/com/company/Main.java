@@ -1,9 +1,6 @@
 package com.company;
 
-import my.library.CArrayList;
-import my.library.CComparator;
-import my.library.CList;
-import my.library.Library;
+import my.library.*;
 import pre_processing.SWRemover;
 import pre_processing.Stemmer;
 import pre_processing.Tokenizer;
@@ -13,29 +10,39 @@ import java.io.*;
 import java.net.URL;
 
 public class Main {
-    private Tokenizer tokenizer;
-    private SWRemover swRemover;
-    private Stemmer stemmer;
-    private Ranker ranker;
+    private char DARI1 = '।';
+    private char DARI2 = '৷';
+    private String titleOrHeader;
 
-    public Main() throws IOException {
-        tokenizer = new Tokenizer();
-        swRemover = new SWRemover();
-        stemmer = new Stemmer();
-        //ranker = new Ranker();
+    public Main() {
+        this.titleOrHeader = "";
     }
+
 
     private String readFile(String fileName) throws IOException {
         URL url = this.getClass().getResource(fileName);
         File file = new File(url.getFile());
         BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+
         StringBuffer sb = new StringBuffer();
+        StringBuffer sbTitle = new StringBuffer();
         while (bufferedReader.ready()) {
-            sb.append(bufferedReader.readLine() + " ");
+            String line = bufferedReader.readLine();
+            line = Library.trim(line);
+            sb.append(line + " ");
+
+            // if this line is a header or title and not contain dari
+            if(line.length() <= 5 && !line.contains(this.DARI1+"") && !line.contains(this.DARI2+"")) {
+                sbTitle.append(line + " ");
+                System.out.println(line);
+            }
         }
+
+        this.titleOrHeader = sbTitle.toString();
         bufferedReader.close();
         return sb.toString();
     }
+
 
     private void writeFile(String fileName) throws IOException {
         URL url = this.getClass().getResource(fileName);
@@ -49,6 +56,7 @@ public class Main {
         bufferedWriter.close();
     }
 
+
     private void printList(CList<CList<String>> list) {
         for(int i = 0; i < list.size(); i++) {
             CList<String> tokens = list.get(i);
@@ -60,17 +68,33 @@ public class Main {
         }
     }
 
-    public static void main(String[] args) throws IOException {
-        // write your code here
-        Main main = new Main();
 
+    public static void main(String[] args) throws IOException {
+        // read text from file
+        Main main = new Main();
         String inputText = main.readFile("input_file.txt");
-        //System.out.println(inputText);
 
         // tokenize text
-        CList<CList<String>> tokens = main.tokenizer.tokenize(inputText);
+        Tokenizer tokenizer = new Tokenizer();
+        CList<CList<String>> tokenizedText = tokenizer.tokenize(inputText);
 
-        Ranker ranker = new Ranker(tokens, tokens);
+        // extract skeleton words titleOrHeader using tokenizer
+        CList<String> skeletonWords = tokenizer.getWords(main.titleOrHeader);
+
+
+        // remove stop words
+        SWRemover swRemover = new SWRemover();
+        CList<CList<String>> swRemovedText = swRemover.remove(tokenizedText);
+
+        // stem words of each sentences
+        Stemmer stemmer = new Stemmer();
+        CList<CList<String>> stemmedText = stemmer.stemText(swRemovedText);
+
+        // stem skeletonWords
+        skeletonWords = stemmer.stemList(skeletonWords);
+
+        // rank the sentences
+        Ranker ranker = new Ranker(skeletonWords, tokenizedText, stemmedText);
         ranker.rank();
 
 

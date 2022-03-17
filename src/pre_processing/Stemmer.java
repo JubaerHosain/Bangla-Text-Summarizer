@@ -183,11 +183,19 @@ public class Stemmer {
         return word;
     }
 
+    public CList<String> stemList(CList<String> tokens) {
+        for(int i = 0; i < tokens.size(); i++) {
+            tokens.replaceAt(i, stemWord(tokens.get(i)));
+        }
+        return tokens;
+    }
+
     public CList<CList<String>> stemText(CList<CList<String>> tokenizedText) {
         for(int i = 0; i < tokenizedText.size(); i++) {
-            for(int j = 0; j < tokenizedText.get(i).size(); j++) {
-                String stem = stemWord(tokenizedText.get(i).get(j));
-                tokenizedText.get(i).replaceAt(j, stem);
+            CList<String> tokens = tokenizedText.get(i);
+            for(int j = 0; j < tokens.size(); j++) {
+                String stem = stemWord(tokens.get(j));
+                tokens.replaceAt(j, stem);
             }
         }
         return tokenizedText;

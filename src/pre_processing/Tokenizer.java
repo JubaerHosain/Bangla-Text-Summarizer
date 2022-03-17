@@ -48,7 +48,7 @@ public class Tokenizer {
     /** split sentences by space, comma, double quote,
      * single quote question mark, exclamation sign, dot
      */
-    private CList<String> getWords(String sentence) {
+    public CList<String> getWords(String sentence) {
         CList<String> words = new CArrayList<>();
         StringBuffer sb = new StringBuffer();
         for(int i = 0; i < sentence.length(); i++) {

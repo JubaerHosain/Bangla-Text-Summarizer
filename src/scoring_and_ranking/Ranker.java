@@ -24,12 +24,13 @@ public class Ranker {
     CList<CList<String>>  preProcessedText;
 
     private Trie cueWords;
+    private Trie skeletonWords;
     private Trie frequencyTrie;
 
     private CList<Score> scores;
     private int noOfSentences;
 
-    public Ranker(CList<CList<String>> tokenizedText, CList<CList<String>> preProcessedText) throws IOException {
+    public Ranker(CList<String> skeletonWords, CList<CList<String>> tokenizedText, CList<CList<String>> preProcessedText) throws IOException {
         if(tokenizedText.size() != preProcessedText.size()) {
             throw new ArrayIndexOutOfBoundsException("size of tokenizedText and preProcessedText is not equal");
         }
@@ -40,6 +41,12 @@ public class Ranker {
         this.preProcessedText = preProcessedText;
 
         this.frequencyTrie = new Trie();
+
+        // add skeletonWords list to the skeletonWords Trie
+        this.skeletonWords = new Trie();
+        for(int i = 0; i < skeletonWords.size(); i++) {
+            this.skeletonWords.add(skeletonWords.get(i));
+        }
 
         // initialize scores list with Score Object (given actual position of sentence)
         this.scores = new CArrayList<>(this.noOfSentences);
@@ -109,7 +116,14 @@ public class Ranker {
     }
 
     private void calculateSkeletonWeight() {
-
+        for(int i = 0; i < this.noOfSentences; i++) {
+            CList<String> tokens = preProcessedText.get(i);
+            for(int j = 0; j < tokens.size(); j++) {
+                if(this.skeletonWords.contains(tokens.get(j))) {
+                    this.scores.get(i).setSkeletonWeight(this.LAMBDA);
+                }
+            }
+        }
     }
 
     /** finally calculate actual total score for each sentence */
@@ -131,7 +145,7 @@ public class Ranker {
         calculateSkeletonWeight();
         calculateTotalScore();
 
-        // sort sentences in descending order of totalScore
+        // sort sentences in descending order by totalScore
         // then frequency, cue word weight, skeleton weight, positional value
         Library.sort(scores, new CComparator<Score>() {
             @Override

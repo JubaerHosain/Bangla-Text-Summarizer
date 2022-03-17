@@ -50,9 +50,9 @@ public abstract class Library {
     public static String trim(String string) {
         StringBuffer sb = new StringBuffer();
         int i = 0, j = string.length()-1;
-        while(string.charAt(i) == ' ')
+        while(i < j && string.charAt(i) == ' ')
             i++;
-        while(string.charAt(j) == ' ')
+        while(i < j && string.charAt(j) == ' ')
             j--;
         while(i <= j) {
              sb.append(string.charAt(i));
