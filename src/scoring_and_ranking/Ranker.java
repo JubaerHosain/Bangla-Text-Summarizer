@@ -96,7 +96,7 @@ public class Ranker {
     /** calculate positional value for each sentences */
     private void calculatePositionalValue() {
         for(int i = 0; i < this.noOfSentences; i++) {
-            scores.get(i).setPositionalValue(1/(i+1));
+            scores.get(i).setPositionalValue(1/(double)(i+1));
         }
     }
 
@@ -150,10 +150,38 @@ public class Ranker {
         Library.sort(scores, new CComparator<Score>() {
             @Override
             public int compare(Score obj1, Score obj2) {
-                // write your logic
+                double diff = obj1.getTotalScore() - obj2.getTotalScore();
+                if(diff != 0)
+                    return diff > 0 ? -1 : 1;
+
+                diff = obj1.getSentenceFrequency() - obj2.getSentenceFrequency();
+                if(diff != 0)
+                    return diff > 0 ? -1 : 1;
+
+                diff = obj1.getCueWordsWeight() - obj2.getCueWordsWeight();
+                if(diff != 0)
+                    return diff > 0 ? -1 : 1;
+
+                diff = obj1.getSkeletonWeight() - obj2.getSkeletonWeight();
+                if(diff != 0)
+                    return diff > 0 ? -1 : 1;
+
+                diff = obj1.getPositionalValue() - obj2.getPositionalValue();
+                if(diff != 0)
+                    return diff > 0 ? -1 : 1;
+
                 return 0;
             }
         });
+
+        for(int i = 0; i < this.noOfSentences; i++) {
+            System.out.print("STF: " + scores.get(i).getSentenceFrequency());
+            System.out.print(", AP: " + scores.get(i).getActualPosition());
+            System.out.print(", CW: " + scores.get(i).getCueWordsWeight());
+            System.out.print(", PV: " + scores.get(i).getPositionalValue());
+            System.out.print(", SW: " + scores.get(i).getSkeletonWeight());
+            System.out.println(", TS: " + scores.get(i).getTotalScore());
+        }
     }
 
     public static void main(String[] args) {
