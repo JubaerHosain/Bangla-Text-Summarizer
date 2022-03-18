@@ -69,6 +69,32 @@ public class Main {
     }
 
 
+    private void generateSummary(CList<Integer> positions, CList<CList<String>> tokenizedText) {
+        int totalSentence = positions.size();
+        double percentage = 40.0;
+        int noOfSentence = (int) ((percentage/100.0) * totalSentence);
+        if(noOfSentence < 4) {
+            noOfSentence = 4;
+        }
+        if(noOfSentence > totalSentence) {
+            noOfSentence = totalSentence;
+        }
+
+        // remove extra sentences from the end
+        for(int i = totalSentence-1; i >= noOfSentence; i--)
+            positions.removeFrom(i);
+
+
+        // sort by ascending order of actual position
+        Library.sort(positions, (obj1, obj2) -> obj1 - obj2);
+
+        for(int i = 0; i < noOfSentence; i++) {
+            CList<String> sentence = tokenizedText.get(positions.get(i));
+            System.out.println(Library.listToString(sentence));
+        }
+    }
+
+
     public static void main(String[] args) throws IOException {
         // read text from file
         Main main = new Main();
@@ -84,21 +110,28 @@ public class Main {
 
         // remove stop words
         SWRemover swRemover = new SWRemover();
-        CList<CList<String>> swRemovedText = swRemover.remove(tokenizedText);
+        tokenizedText = swRemover.remove(tokenizedText);
 
         // stem words of each sentences
         Stemmer stemmer = new Stemmer();
-        CList<CList<String>> stemmedText = stemmer.stemText(swRemovedText);
+        CList<CList<String>> stemmedText = stemmer.stemText(tokenizedText);
 
         // stem skeletonWords
         skeletonWords = stemmer.stemList(skeletonWords);
 
+        // re tokenize(instance changed before)
+        tokenizedText = tokenizer.tokenize(inputText);
+
         // rank the sentences
         Ranker ranker = new Ranker(skeletonWords, tokenizedText, stemmedText);
-        ranker.rank();
+        CList<Integer> positions = ranker.rank();
 
+        // print positions;
+//        for(int i = 0; i < positions.size(); i++)
+//            System.out.print(positions.get(i) + " ");
+//        System.out.println();
 
-        main.writeFile("output_file.txt");
+        main.generateSummary(positions, tokenizedText);
     }
 }
 

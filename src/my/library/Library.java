@@ -66,6 +66,17 @@ public abstract class Library {
         return true;
     }
 
+    /** convert list of word to string */
+    public static String listToString(CList<String> list) {
+        StringBuffer sb = new StringBuffer();
+        for(int i = 0; i < list.size(); i++) {
+            sb.append(list.get(i));
+            if(i < list.size()-1)
+                sb.append(" ");
+        }
+        return sb.toString();
+    }
+
     // ====================Sorting Algorithm====================
     /** sort list (don't use primitive type) */
     public static <Type> void sort(CList<Type> list, CComparator<Type> comparator) {

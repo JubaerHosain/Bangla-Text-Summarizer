@@ -138,7 +138,7 @@ public class Ranker {
     }
 
 
-    public void rank() {
+    public CList<Integer> rank() {
         calculateFrequency();
         calculatePositionalValue();
         calculateCueWordWeight();
@@ -147,41 +147,45 @@ public class Ranker {
 
         // sort sentences in descending order by totalScore
         // then frequency, cue word weight, skeleton weight, positional value
-        Library.sort(scores, new CComparator<Score>() {
-            @Override
-            public int compare(Score obj1, Score obj2) {
-                double diff = obj1.getTotalScore() - obj2.getTotalScore();
-                if(diff != 0)
-                    return diff > 0 ? -1 : 1;
+        Library.sort(scores, (obj1, obj2) -> {
+            double diff = obj1.getTotalScore() - obj2.getTotalScore();
+            if(diff != 0)
+                return diff > 0 ? -1 : 1;
 
-                diff = obj1.getSentenceFrequency() - obj2.getSentenceFrequency();
-                if(diff != 0)
-                    return diff > 0 ? -1 : 1;
+            diff = obj1.getSentenceFrequency() - obj2.getSentenceFrequency();
+            if(diff != 0)
+                return diff > 0 ? -1 : 1;
 
-                diff = obj1.getCueWordsWeight() - obj2.getCueWordsWeight();
-                if(diff != 0)
-                    return diff > 0 ? -1 : 1;
+            diff = obj1.getCueWordsWeight() - obj2.getCueWordsWeight();
+            if(diff != 0)
+                return diff > 0 ? -1 : 1;
 
-                diff = obj1.getSkeletonWeight() - obj2.getSkeletonWeight();
-                if(diff != 0)
-                    return diff > 0 ? -1 : 1;
+            diff = obj1.getSkeletonWeight() - obj2.getSkeletonWeight();
+            if(diff != 0)
+                return diff > 0 ? -1 : 1;
 
-                diff = obj1.getPositionalValue() - obj2.getPositionalValue();
-                if(diff != 0)
-                    return diff > 0 ? -1 : 1;
+            diff = obj1.getPositionalValue() - obj2.getPositionalValue();
+            if(diff != 0)
+                return diff > 0 ? -1 : 1;
 
-                return 0;
-            }
+            return 0;
         });
 
+//        for(int i = 0; i < this.noOfSentences; i++) {
+//            System.out.print("STF: " + scores.get(i).getSentenceFrequency());
+//            System.out.print(", AP: " + scores.get(i).getActualPosition());
+//            System.out.print(", CW: " + scores.get(i).getCueWordsWeight());
+//            System.out.print(", PV: " + scores.get(i).getPositionalValue());
+//            System.out.print(", SW: " + scores.get(i).getSkeletonWeight());
+//            System.out.println(", TS: " + scores.get(i).getTotalScore());
+//        }
+
+        CList<Integer> actualPositions = new CArrayList<>(this.noOfSentences + 5);
         for(int i = 0; i < this.noOfSentences; i++) {
-            System.out.print("STF: " + scores.get(i).getSentenceFrequency());
-            System.out.print(", AP: " + scores.get(i).getActualPosition());
-            System.out.print(", CW: " + scores.get(i).getCueWordsWeight());
-            System.out.print(", PV: " + scores.get(i).getPositionalValue());
-            System.out.print(", SW: " + scores.get(i).getSkeletonWeight());
-            System.out.println(", TS: " + scores.get(i).getTotalScore());
+            actualPositions.add(scores.get(i).getActualPosition());
         }
+
+        return actualPositions;
     }
 
     public static void main(String[] args) {
