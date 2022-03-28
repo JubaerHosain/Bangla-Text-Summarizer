@@ -8,6 +8,7 @@ import scoring_and_ranking.Ranker;
 
 import java.io.*;
 import java.net.URL;
+import java.util.Scanner;
 
 public class Main {
     private char DARI1 = '।';
@@ -70,9 +71,15 @@ public class Main {
 
 
     private void generateSummary(CList<Integer> positions, CList<CList<String>> tokenizedText) {
+        // take input from user
+        // the percentage user want to see
+        System.out.print("How much you want to see(percentage): ");
+        Scanner scanner = new Scanner(System.in);
+        double percentage = scanner.nextDouble();
+
         int totalSentence = positions.size();
-        double percentage = 40.0;
         int noOfSentence = (int) ((percentage/100.0) * totalSentence);
+        
         if(noOfSentence < 4) {
             noOfSentence = 4;
         }
