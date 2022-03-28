@@ -21,8 +21,9 @@ public class Main {
 
 
     private String readFile(String fileName) throws IOException {
-        URL url = this.getClass().getResource(fileName);
-        File file = new File(url.getFile());
+        // URL url = this.getClass().getResource(fileName);
+        // File file = new File(url.getFile());
+        File file = new File(fileName);
         BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
 
         StringBuffer sb = new StringBuffer();
@@ -46,13 +47,14 @@ public class Main {
 
 
     private void writeFile(String fileName) throws IOException {
-        URL url = this.getClass().getResource(fileName);
-        File file = new File(url.getFile());
+        // URL url = this.getClass().getResource(fileName);
+        // File file = new File(url.getFile());
+        File file = new File(fileName);
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
 
         String str = "Hello World";
         for(int i = 0; i < 17; i++)
-            bufferedWriter.write("Hello World1+1 ");
+            bufferedWriter.write("Hello World" + i + "\n");
 
         bufferedWriter.close();
     }
