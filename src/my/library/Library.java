@@ -1,14 +1,30 @@
 package my.library;
 
-import java.lang.reflect.Type;
-
-// this is a static class
+/** This is a static class contains some useful methods */
 public abstract class Library {
     // ====================CList Methods====================
     /** try to don't use for CLinkedList */
     public static <Type> void fill(CList<Type> list, Type value) {
         for(int i = 0; i < list.size(); i++) {
             list.replaceAt(i, value);
+        }
+    }
+
+    private void printList(CList<String> list) {
+        for(int i = 0; i < list.size(); i++) {
+            System.out.print(list.get(i) + " ");
+        }
+        System.out.println();
+    }
+
+    public void printListOfList(CList<CList<String>> list) {
+        for(int i = 0; i < list.size(); i++) {
+            CList<String> tokens = list.get(i);
+            System.out.print((i+1) + ": ");
+            for(int j = 0; j < tokens.size(); j++) {
+                System.out.print(tokens.get(j) + " ");
+            }
+            System.out.println();
         }
     }
 

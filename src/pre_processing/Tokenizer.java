@@ -3,15 +3,17 @@ package pre_processing;
 import my.library.CArrayList;
 import my.library.CList;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Tokenizer {
     private char DARI1 = '।';
     private char DARI2 = '৷';
 
-    private CList<Character> escapChars;
+    private Set<Character> escapChars;
 
     public Tokenizer() {
-        escapChars = new CArrayList<>();
-        // add escap chars
+        escapChars = new HashSet<>();
         escapChars.add(' ');
         escapChars.add(',');
         escapChars.add(',');
@@ -25,12 +27,13 @@ public class Tokenizer {
         escapChars.add('-');
         escapChars.add(DARI1);
         escapChars.add(DARI2);
+        escapChars.add('(');
+        escapChars.add(')');
     }
 
-    /** split text to sentences */
+    /** split text to sentence by dari*/
     private CList<String> getSentences(String text) {
         CList<String> sentences = new CArrayList<>();
-        // split TEXT by dari
         StringBuffer sb = new StringBuffer();
         for(int i = 0; i < text.length(); i++) {
             if(text.charAt(i) == DARI1 || text.charAt(i) == DARI2) {
@@ -42,6 +45,11 @@ public class Tokenizer {
                 sb.append(text.charAt(i));
             }
         }
+
+        String sentence = sb.toString().trim();
+        if(sentence.length() > 0)
+            sentences.add(sentence);
+
         return sentences;
     }
 
@@ -53,16 +61,16 @@ public class Tokenizer {
         StringBuffer sb = new StringBuffer();
         for(int i = 0; i < sentence.length(); i++) {
             if(escapChars.contains(sentence.charAt(i))) {
-                String word = sb.toString();
+                String word = sb.toString().trim();
                 if(word.length() > 0)
                     words.add(word);
                 sb = new StringBuffer();
             } else {
-                sb.append((char)sentence.charAt(i));
+                sb.append(sentence.charAt(i));
             }
         }
 
-        String word = sb.toString();
+        String word = sb.toString().trim();
         if(word.length() > 0)
             words.add(word);
 
@@ -70,19 +78,13 @@ public class Tokenizer {
     }
 
     public CList<CList<String>> tokenize(String inputText) {
-        // Each sentence with tokenized words
-        CList<CList<String>> tokenizedText = new CArrayList<>();
         CList<String> sentences = getSentences(inputText);
-        for(int i = 0; i < sentences.size(); i++) {
+        int numberOfSentence = sentences.size();
+        CList<CList<String>> tokenizedText = new CArrayList<>(numberOfSentence);
+        for(int i = 0; i < numberOfSentence; i++) {
             CList<String> words = getWords(sentences.get(i));
             tokenizedText.add(words);
         }
-
         return tokenizedText;
-    }
-
-    public static void main(String[] args) {
-        Tokenizer t = new Tokenizer();
-        System.out.println(t.DARI2 == '।');
     }
 }

@@ -15,7 +15,7 @@ public class CArrayList<Type> implements CList<Type> {
 
     public CArrayList(int capacity) {
         this.capacity = capacity;
-        array = (Type[]) new Object[capacity];
+        array = (Type[]) new Object[capacity+5];
     }
 
     @Override
@@ -29,7 +29,7 @@ public class CArrayList<Type> implements CList<Type> {
 
     @Override
     public void add(Type element) {
-        if(capacity - size <= 5)
+        if(capacity - size <= 2)
             increaseArrayLength();
         array[size++] = element;
     }
@@ -115,11 +115,18 @@ public class CArrayList<Type> implements CList<Type> {
     // private methods
     private void increaseArrayLength() {
         // Increase array size by 50%
-        capacity = array.length + (array.length / 2);
-        Type[] newArray = (Type[]) new Object[capacity];
+        capacity = array.length + array.length/2;
+        Type[] newArray = (Type[]) new Object[capacity+2];
         for(int i = 0; i < array.length; i++) {
             newArray[i] = array[i];
         }
         array = newArray;
+    }
+
+    @Override
+    public void clear() {
+        array = null;
+        size = 0;
+        capacity = 0;
     }
 }

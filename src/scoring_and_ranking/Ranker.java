@@ -35,11 +35,9 @@ public class Ranker {
             throw new ArrayIndexOutOfBoundsException("size of tokenizedText and preProcessedText is not equal");
         }
 
-
         this.noOfSentences = preProcessedText.size();
         this.tokenizedText = tokenizedText;
         this.preProcessedText = preProcessedText;
-
         this.frequencyTrie = new Trie();
 
         // add skeletonWords list to the skeletonWords Trie
@@ -170,15 +168,6 @@ public class Ranker {
 
             return 0;
         });
-
-//        for(int i = 0; i < this.noOfSentences; i++) {
-//            System.out.print("STF: " + scores.get(i).getSentenceFrequency());
-//            System.out.print(", AP: " + scores.get(i).getActualPosition());
-//            System.out.print(", CW: " + scores.get(i).getCueWordsWeight());
-//            System.out.print(", PV: " + scores.get(i).getPositionalValue());
-//            System.out.print(", SW: " + scores.get(i).getSkeletonWeight());
-//            System.out.println(", TS: " + scores.get(i).getTotalScore());
-//        }
 
         CList<Integer> actualPositions = new CArrayList<>(this.noOfSentences + 5);
         for(int i = 0; i < this.noOfSentences; i++) {

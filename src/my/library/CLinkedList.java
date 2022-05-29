@@ -192,6 +192,11 @@ public class CLinkedList<Type> implements CList<Type> {
         System.out.println();
     }
 
+    @Override
+    public void clear() {
+
+    }
+
     // private methods
 
     // main method
@@ -208,6 +213,5 @@ public class CLinkedList<Type> implements CList<Type> {
         list.removeFrom(0);
         list.removeFrom(list.size()-1);
         list.print();
-
     }
 }

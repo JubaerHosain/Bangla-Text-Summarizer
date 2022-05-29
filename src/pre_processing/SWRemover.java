@@ -1,6 +1,5 @@
 package pre_processing;
 
-
 import my.library.CArrayList;
 import my.library.CList;
 import my.library.Trie;
@@ -15,13 +14,10 @@ import java.util.TreeSet;
 
 /** Bengali Stop Word Remover*/
 public class SWRemover {
-
     private Trie stopWords;
-    Set<String> set;
 
     public SWRemover() throws IOException {
         stopWords = new Trie();
-        set = new TreeSet<>();
         readStopWords("1_bangla_stopwords.txt");
     }
 
@@ -33,14 +29,13 @@ public class SWRemover {
         while (bufferedReader.ready()) {
             String stopWord = bufferedReader.readLine();
             stopWord = stopWord.trim();
-            set.add(stopWord);
             stopWords.add(stopWord);
         }
         bufferedReader.close();
     }
 
-    // remove stop words from sentences
-    private CList<String> removeWords(CList<String> tokens) {
+    /** removes stop words from a tokenized sentence*/
+    private CList<String> eraseStopWords(CList<String> tokens) {
         CList<String> newTokens = new CArrayList<>();
         for(int i = 0; i < tokens.size(); i++) {
             if(!stopWords.contains(tokens.get(i)))
@@ -49,18 +44,14 @@ public class SWRemover {
         return newTokens;
     }
 
-
-    public CList<CList<String>> remove(CList<CList<String>> tokenizedText) {
-        for(int i = 0; i < tokenizedText.size(); i++) {
-            CList<String> newTokens = removeWords(tokenizedText.get(i));
-            tokenizedText.replaceAt(i, newTokens);
+    /** removes stop words from tokenized sentences*/
+    public CList<CList<String>> removeStopWords(CList<CList<String>> tokenizedText) {
+        int numberOfSentences = tokenizedText.size();
+        CList<CList<String>> swRemovedText = new CArrayList<>(numberOfSentences);
+        for(int i = 0; i < numberOfSentences; i++) {
+            CList<String> newTokens = eraseStopWords(tokenizedText.get(i));
+            swRemovedText.add(newTokens);
         }
-        return tokenizedText;
-    }
-
-    public static void main(String args[]) throws IOException {
-        SWRemover swRemover = new SWRemover();
-        for(String str: swRemover.set)
-            System.out.println(str);
+        return swRemovedText;
     }
 }

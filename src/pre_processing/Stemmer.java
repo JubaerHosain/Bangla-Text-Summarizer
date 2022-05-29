@@ -55,7 +55,6 @@ public class Stemmer {
         readAndStoreToListOfPair(replaceWithDot, "8_replace_suffixes_with_dot.txt");
     }
 
-
     private void readAndStoreToTrie(Trie trie, String fileName) throws IOException {
         URL url = this.getClass().getResource(fileName);
         File file = new File(url.getFile());
@@ -77,7 +76,6 @@ public class Stemmer {
             String line = bufferedReader.readLine();
             line = line.trim();
             if(line.length() < 1) continue;
-            //System.out.println(line);
             myList.add(line);
         }
         bufferedReader.close();
@@ -93,12 +91,10 @@ public class Stemmer {
             if(tokens.length <= 1) continue;
             tokens[0] = tokens[0].trim();
             tokens[1] = tokens[1].trim();
-            //System.out.println(tokens[0] + "->" + tokens[1]);
             myList.add(new Pair<>(tokens[0], tokens[1]));
         }
         bufferedReader.close();
     }
-
 
     private boolean matchSuffix(String suffix, String word) {
         int m = suffix.length()-1;
@@ -119,9 +115,8 @@ public class Stemmer {
         return true;
     }
 
-
-    public String stemWord(String word) {
-        word = word.trim();
+    public String stemWord(String input) {
+        String word = input;
 
         if(notStem.contains(word)) {
             return word;
@@ -184,26 +179,20 @@ public class Stemmer {
     }
 
     public CList<String> stemList(CList<String> tokens) {
+        int numberOfWord = tokens.size();
+        CList<String> stemmedTokens = new CArrayList<>(numberOfWord);
         for(int i = 0; i < tokens.size(); i++) {
-            tokens.replaceAt(i, stemWord(tokens.get(i)));
+            stemmedTokens.add(stemWord(tokens.get(i)));
         }
-        return tokens;
+        return stemmedTokens;
     }
 
     public CList<CList<String>> stemText(CList<CList<String>> tokenizedText) {
-        for(int i = 0; i < tokenizedText.size(); i++) {
-            CList<String> tokens = tokenizedText.get(i);
-            for(int j = 0; j < tokens.size(); j++) {
-                String stem = stemWord(tokens.get(j));
-                tokens.replaceAt(j, stem);
-            }
+        int numberOfSentence = tokenizedText.size();
+        CList<CList<String>> stemmedText = new CArrayList<>(numberOfSentence);
+        for(int i = 0; i < numberOfSentence; i++) {
+            stemmedText.add(stemList(tokenizedText.get(i)));
         }
-        return tokenizedText;
-    }
-
-    public static void main(String[] args) throws IOException {
-        Stemmer stemmer = new Stemmer();
-        stemmer.readAndStoreToTrie(stemmer.bochonSuffixes, "8_replace_suffixes_with_dot.txt");
-        System.out.print("sadfas;lkds");
+        return stemmedText;
     }
 }
