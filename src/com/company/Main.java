@@ -105,7 +105,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         System.out.print("\t\t\t Welcome to BANGLA TEXT SUMMARIZER\n");
-        System.out.print("\t\t\t Enter input file path: ");
+        System.out.print("\t\t\t Enter input file name: ");
 
         Scanner scanner = new Scanner(System.in);
         String inputFileName = scanner.next();
